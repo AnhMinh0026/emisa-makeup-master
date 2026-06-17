@@ -1,4 +1,8 @@
+import { useState } from 'react';
 import Masonry from 'react-masonry-css';
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/styles.css";
 import styles from './Home.module.css';
 
 /* ── Masonry breakpoints ── */
@@ -67,23 +71,41 @@ const IMAGES = [
 ];
 
 export default function Home() {
+  const [index, setIndex] = useState(-1);
+
   return (
-    <Masonry
-      breakpointCols={BREAKPOINTS}
-      className={styles.masonryGrid}
-      columnClassName={styles.masonryColumn}
-    >
-      {IMAGES.map((img) => (
-        <div key={img.id} className={styles.item}>
-          <img
-            className={styles.image}
-            src={img.src}
-            alt={img.alt}
-            loading="lazy"
-            style={{ height: img.height }}
-          />
-        </div>
-      ))}
-    </Masonry>
+    <>
+      <Masonry
+        breakpointCols={BREAKPOINTS}
+        className={styles.masonryGrid}
+        columnClassName={styles.masonryColumn}
+      >
+        {IMAGES.map((img, i) => (
+          <div 
+            key={img.id} 
+            className={styles.item}
+            style={{ cursor: 'pointer' }}
+            onClick={() => setIndex(i)}
+          >
+            <img
+              className={styles.image}
+              src={img.src}
+              alt={img.alt}
+              loading="lazy"
+              style={{ height: img.height }}
+            />
+          </div>
+        ))}
+      </Masonry>
+
+      <Lightbox
+        index={index}
+        open={index >= 0}
+        close={() => setIndex(-1)}
+        slides={IMAGES.map((img) => ({ src: img.src }))}
+        plugins={[Zoom]}
+        zoom={{ maxZoomPixelRatio: 3 }}
+      />
+    </>
   );
 }

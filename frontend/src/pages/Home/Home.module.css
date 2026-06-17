@@ -69,3 +69,14 @@
     object-position: center 15%;
   }
 }
+
+/* ── Lightbox (Achromatic Editorial) ── */
+/* Ghi đè CSS variables của yet-another-react-lightbox */
+:global(.yarl__root) {
+  --yarl__color_backdrop: rgba(0, 0, 0, 0.98); /* Pure black, high opacity */
+  --yarl__slide_image_border_radius: 0px; /* Sharp corners */
+  --yarl__color_button: rgba(255, 255, 255, 0.8);
+  --yarl__color_button_active: #ffffff;
+  --yarl__button_filter: none; /* No cheap blurs or shadows on buttons */
+  font-family: 'Inter', sans-serif;
+}
