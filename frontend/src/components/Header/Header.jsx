@@ -1,11 +1,19 @@
 import { IconBrandInstagram, IconBrandFacebook, IconPhone } from '@tabler/icons-react';
 import { Link, useLocation } from 'react-router-dom';
+import { Menu } from '@mantine/core';
 import styles from './Header.module.css';
 
 const NAV_LINKS = [
   { label: 'HOME GALLERY', path: '/' },
   { label: 'STYLE GALLERIES', path: '/style-galleries' },
   { label: 'CONTACT', path: '/contact' },
+];
+
+const GALLERY_CATEGORIES = [
+  { label: 'EDITORIAL MAKEUP', path: '/style-galleries/editorial' },
+  { label: 'BRIDAL MAKEUP', path: '/style-galleries/bridal' },
+  { label: 'FASHION & RUNWAY', path: '/style-galleries/fashion' },
+  { label: 'CREATIVE & AVANT-GARDE', path: '/style-galleries/creative' },
 ];
 
 export default function Header() {
@@ -25,6 +33,43 @@ export default function Header() {
         <nav className={styles.navBar}>
           <div className={styles.navGroup}>
             {NAV_LINKS.map((link) => {
+              if (link.label === 'STYLE GALLERIES') {
+                const isStyleActive = location.pathname.startsWith('/style-galleries');
+                return (
+                  <Menu
+                    key={link.label}
+                    shadow="none"
+                    radius={0}
+                    width={220}
+                    position="bottom"
+                    classNames={{
+                      dropdown: styles.menuDropdown,
+                      item: styles.menuItem,
+                    }}
+                  >
+                    <Menu.Target>
+                      <span
+                        className={`${styles.navLink} ${isStyleActive ? styles.navLinkActive : ''}`}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {link.label}
+                      </span>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                      {GALLERY_CATEGORIES.map((item) => (
+                        <Menu.Item
+                          key={item.label}
+                          component={Link}
+                          to={item.path}
+                        >
+                          {item.label}
+                        </Menu.Item>
+                      ))}
+                    </Menu.Dropdown>
+                  </Menu>
+                );
+              }
+
               const isActive = location.pathname === link.path;
               return (
                 <Link
