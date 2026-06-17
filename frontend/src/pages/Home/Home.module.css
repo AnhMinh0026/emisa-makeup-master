@@ -19,8 +19,8 @@
 .item {
   margin-bottom: 8px;
   overflow: hidden;
-  border-radius: 0;           /* Sharp — 0px always */
-  background-color: #e2e2e2;  /* surface-container-highest placeholder */
+  border-radius: 0;
+  background-color: #e2e2e2;
   display: block;
 }
 
@@ -36,4 +36,36 @@
 
 .item:hover .image {
   transform: scale(1.03);
+}
+
+/* ── Tablet (2 cột, thu nhỏ chiều cao ~70%) ── */
+@media (max-width: 900px) {
+  .image {
+    /* Scale chiều cao xuống còn 70% so với desktop */
+    max-height: 55vw;
+    height: auto !important;
+  }
+}
+
+/* ── Mobile (vẫn 2 cột — gutter 4px, ảnh compact hơn) ── */
+@media (max-width: 600px) {
+  /* Giảm gutter xuống 4px để tiết kiệm không gian */
+  .masonryGrid {
+    margin-left: -4px;
+  }
+
+  .masonryColumn {
+    padding-left: 4px;
+  }
+
+  .item {
+    margin-bottom: 4px;
+  }
+
+  /* Ảnh mobile: chiều cao theo tỉ lệ 2-cột — không bị cắt quá nhiều */
+  .image {
+    max-height: 48vw;  /* ~half viewport width = vuông vừa đủ */
+    height: auto !important;
+    object-position: center 15%;
+  }
 }

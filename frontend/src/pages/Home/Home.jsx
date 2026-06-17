@@ -3,9 +3,9 @@ import styles from './Home.module.css';
 
 /* ── Masonry breakpoints ── */
 const BREAKPOINTS = {
-  default: 3,
-  900:     2,
-  600:     1,
+  default: 3,   // > 900px — 3 cột
+  900:     2,   // 600–900px — 2 cột
+  // mobile vẫn giữ 2 cột, chỉ thu nhỏ chiều cao ảnh qua CSS
 };
 
 /* ── 9 editorial images, heights vary to create masonry rhythm ── */
