@@ -1,0 +1,27 @@
+/* ================================================
+   ClientLayout.module.css
+   DESIGN.md — Achromatic Editorial
+   ================================================ */
+
+.wrapper {
+  min-height: 100vh;
+  background-color: #f9f9f9; /* surface */
+  display: flex;
+  flex-direction: column;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #000000; /* primary — 1px ruling line */
+  flex-shrink: 0;
+  border: none;
+  margin: 0;
+}
+
+/* margin-desktop: 64px per DESIGN.md */
+.main {
+  flex: 1;
+  padding: 64px;
+  background-color: #f9f9f9;
+}

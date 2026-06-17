@@ -1,0 +1,94 @@
+/* ================================================
+   Header.module.css
+   DESIGN.md — Achromatic Editorial
+   ================================================ */
+
+.header {
+  width: 100%;
+  background-color: #f9f9f9; /* surface */
+  padding-top: 48px;
+  padding-bottom: 0;
+}
+
+/* ── Logo: display-hero — 120px / 900 / -0.04em ── */
+.logo {
+  font-family: 'Inter', sans-serif;
+  font-size: 120px;
+  font-weight: 900;
+  line-height: 110px;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #000000; /* primary */
+  display: block;
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+/* ── Navigation bar row ── */
+.navBar {
+  width: 100%;
+  padding: 32px 64px 24px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ── Nav links group (centered) ── */
+.navGroup {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  position: relative;
+}
+
+/* ── Individual nav link — utility-nav: 11px / 500 / +0.15em ── */
+.navLink {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  color: #5e5e5e; /* secondary — inactive */
+}
+
+.navLink:hover {
+  color: #000000;
+  border-bottom-color: #cfc4c5; /* outline-variant */
+}
+
+/* Active state: primary black + 1px solid ruling line */
+.navLinkActive {
+  color: #000000;
+  border-bottom-color: #000000;
+}
+
+.navLinkActive:hover {
+  border-bottom-color: #000000;
+}
+
+/* ── Icon row: centred row of social/contact icons below nav ── */
+.iconRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding-bottom: 20px;
+}
+
+.iconLink {
+  color: #000000;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.15s ease;
+}
+
+.iconLink:hover {
+  opacity: 0.4;
+}
