@@ -5,15 +5,16 @@ import styles from './Header.module.css';
 
 const NAV_LINKS = [
   { label: 'HOME GALLERY', path: '/' },
-  { label: 'STYLE GALLERIES', path: '/style-galleries' },
+  { label: 'STYLE GALLERIES', path: '/styles/editorial' },
+  { label: 'PRICING', path: '/pricing' },
   { label: 'CONTACT', path: '/contact' },
 ];
 
 const GALLERY_CATEGORIES = [
-  { label: 'EDITORIAL MAKEUP', path: '/style-galleries/editorial' },
-  { label: 'BRIDAL MAKEUP', path: '/style-galleries/bridal' },
-  { label: 'FASHION & RUNWAY', path: '/style-galleries/fashion' },
-  { label: 'CREATIVE & AVANT-GARDE', path: '/style-galleries/creative' },
+  { label: 'EDITORIAL MAKEUP', path: '/styles/editorial' },
+  { label: 'BRIDAL MAKEUP', path: '/styles/bridal' },
+  { label: 'FASHION & RUNWAY', path: '/styles/fashion' },
+  { label: 'CREATIVE & AVANT-GARDE', path: '/styles/creative' },
 ];
 
 export default function Header() {
@@ -34,7 +35,7 @@ export default function Header() {
           <div className={styles.navGroup}>
             {NAV_LINKS.map((link) => {
               if (link.label === 'STYLE GALLERIES') {
-                const isStyleActive = location.pathname.startsWith('/style-galleries');
+                const isStyleActive = location.pathname.startsWith('/styles');
                 return (
                   <Menu
                     key={link.label}
