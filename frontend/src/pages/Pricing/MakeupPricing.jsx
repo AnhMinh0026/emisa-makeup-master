@@ -1,11 +1,13 @@
-import { Container, List } from '@mantine/core';
+import { Container, List, Box } from '@mantine/core';
 import { IconRosetteDiscountCheck } from '@tabler/icons-react';
 import pricingImage from '../../assets/Pricing/EmisaPrice.jpg';
+import PricingList from '../../components/Pricing/PricingList.jsx';
 import styles from './MakeupPricing.module.css';
 
 export default function MakeupPricing() {
   return (
     <Container size="xl" className={styles.page}>
+      {/* ── Hero Section ── */}
       <div className={styles.grid}>
 
         {/* Left Column: Image */}
@@ -21,7 +23,7 @@ export default function MakeupPricing() {
 
           {/* Header */}
           <div className={styles.headerGroup}>
-            <h1 className={styles.mainTitle}>BẢNG GIÁ MAKEUP</h1>
+            <h2 className={styles.mainTitle}>BẢNG GIÁ MAKEUP</h2>
           </div>
 
           {/* Paragraphs */}
@@ -61,6 +63,12 @@ export default function MakeupPricing() {
 
         </div>
       </div>
+
+      {/* ── Pricing Packages Section ── */}
+      <Box className={styles.pricingSection}>
+        <PricingList category="makeup" />
+      </Box>
+
     </Container>
   );
 }

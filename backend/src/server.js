@@ -7,6 +7,7 @@ const connectDB = require('./config/db');
 const imageRoutes = require('./routes/imageRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const contactRoutes = require('./routes/contactRoutes');
+const serviceRoutes = require('./routes/serviceRoutes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/', (req, res) => res.send('API is running...'));
 app.use('/api/images', imageRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/services', serviceRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
