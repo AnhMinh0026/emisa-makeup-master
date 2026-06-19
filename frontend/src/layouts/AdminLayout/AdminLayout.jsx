@@ -7,12 +7,14 @@ import {
   IconArrowLeft,
   IconLayoutDashboard,
   IconChevronRight,
+  IconAddressBook,
 } from '@tabler/icons-react';
 import styles from './AdminLayout.module.css';
 
 const NAV_LINKS = [
   { label: 'Gallery Manager', to: '/admin/gallery', icon: IconPhoto },
   { label: 'Categories', to: '/admin/categories', icon: IconTag },
+  { label: 'Contact Settings', to: '/admin/contact', icon: IconAddressBook },
   { label: 'Settings', to: '/admin/settings', icon: IconSettings },
 ];
 

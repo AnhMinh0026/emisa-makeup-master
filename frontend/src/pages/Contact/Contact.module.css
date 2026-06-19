@@ -1,0 +1,114 @@
+/* ─── Contact Page — Achromatic Editorial Style ─────────────────────────────
+   Pure black / white, zero radius, stark typography.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+}
+
+/* Loading state */
+.loadingWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+}
+
+/* ── Header block ── */
+.headerBlock {
+  border-left: 3px solid #000;
+  padding-left: 20px;
+  margin-bottom: 40px;
+}
+
+.headerText {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  font-weight: 900;
+  color: #000;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+/* ── Contact list ── */
+.listBlock {
+  margin-bottom: 52px;
+  padding-left: 4px;
+}
+
+.contactList {
+  /* override Mantine list defaults */
+  list-style: none;
+}
+
+.listItem {
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.listItem:first-child {
+  border-top: 1px solid #e8e8e8;
+}
+
+.listText {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: #111;
+  line-height: 1.6;
+}
+
+.listLink {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #aaa;
+  transition: text-decoration-color 0.15s ease;
+}
+
+.listLink:hover {
+  text-decoration-color: #000;
+  color: #000;
+}
+
+/* ── Map section ── */
+.mapSection {
+  margin-top: 8px;
+}
+
+.mapSubtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #000;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+/* ── Map container: forces iframe to fill width ── */
+.mapContainer {
+  width: 100%;
+  border: 1px solid #000;
+  border-radius: 0;
+  overflow: hidden;
+  line-height: 0; /* collapse inline whitespace */
+}
+
+.mapEmbed {
+  width: 100%;
+  line-height: 0;
+}
+
+/* Force the injected iframe to match container */
+.mapEmbed iframe {
+  width: 100% !important;
+  height: 450px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  display: block;
+}

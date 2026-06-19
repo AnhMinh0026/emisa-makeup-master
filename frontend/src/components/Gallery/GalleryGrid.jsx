@@ -1,19 +1,11 @@
 import { useState } from 'react';
-import Masonry from 'react-masonry-css';
 import Lightbox from 'yet-another-react-lightbox';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import 'yet-another-react-lightbox/styles.css';
 import styles from './GalleryGrid.module.css';
 
-/* ── Masonry breakpoints ── */
-const BREAKPOINTS = {
-  default: 3,   // > 900px — 3 columns
-  900:     2,   // 600–900px — 2 columns
-  // mobile stays 2 columns, heights shrink via CSS
-};
-
 /**
- * GalleryGrid — Reusable masonry grid with lightbox.
+ * GalleryGrid — Uniform CSS Grid with lightbox.
  *
  * Accepts the MongoDB/Cloudinary data shape:
  *   { _id, imageUrl, title, category, isFeatured, isHidden }
@@ -28,23 +20,18 @@ export default function GalleryGrid({ images = [] }) {
 
   // Normalise both data shapes so the grid & lightbox work with either
   const normalised = images.map((img) => ({
-    key:    img._id   ?? img.id,
-    src:    img.imageUrl ?? img.src,
-    alt:    img.title    ?? img.alt ?? '',
+    key: img._id   ?? img.id,
+    src: img.imageUrl ?? img.src,
+    alt: img.title    ?? img.alt ?? '',
   }));
 
   return (
-    <>
-      <Masonry
-        breakpointCols={BREAKPOINTS}
-        className={styles.masonryGrid}
-        columnClassName={styles.masonryColumn}
-      >
+    <div className={styles.gridWrapper}>
+      <div className={styles.grid}>
         {normalised.map((img, i) => (
           <div
             key={img.key ?? i}
             className={styles.item}
-            style={{ cursor: 'pointer' }}
             onClick={() => setIndex(i)}
             role="button"
             tabIndex={0}
@@ -59,7 +46,7 @@ export default function GalleryGrid({ images = [] }) {
             />
           </div>
         ))}
-      </Masonry>
+      </div>
 
       <Lightbox
         index={index}
@@ -69,6 +56,6 @@ export default function GalleryGrid({ images = [] }) {
         plugins={[Zoom]}
         zoom={{ maxZoomPixelRatio: 3 }}
       />
-    </>
+    </div>
   );
 }
