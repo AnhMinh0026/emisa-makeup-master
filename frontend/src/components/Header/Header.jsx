@@ -1,24 +1,28 @@
+import { useState, useEffect } from 'react';
 import { IconBrandInstagram, IconBrandFacebook, IconPhone } from '@tabler/icons-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu } from '@mantine/core';
+import axios from 'axios';
 import styles from './Header.module.css';
 
 const NAV_LINKS = [
   { label: 'HOME GALLERY', path: '/' },
-  { label: 'STYLE GALLERIES', path: '/styles/editorial' },
+  { label: 'STYLE GALLERIES', path: '/styles' },
   { label: 'PRICING', path: '/pricing' },
   { label: 'CONTACT', path: '/contact' },
 ];
 
-const GALLERY_CATEGORIES = [
-  { label: 'EDITORIAL MAKEUP', path: '/styles/editorial' },
-  { label: 'BRIDAL MAKEUP', path: '/styles/bridal' },
-  { label: 'FASHION & RUNWAY', path: '/styles/fashion' },
-  { label: 'CREATIVE & AVANT-GARDE', path: '/styles/creative' },
-];
-
 export default function Header() {
   const location = useLocation();
+  const [categories, setCategories] = useState([]);
+
+  // Fetch live categories for the dropdown — silently ignore errors
+  useEffect(() => {
+    axios
+      .get('/api/categories')
+      .then(({ data }) => setCategories(data.categories || []))
+      .catch(() => {}); // fail silently — dropdown just stays empty
+  }, []);
 
   return (
     <header className={styles.header}>
@@ -56,16 +60,24 @@ export default function Header() {
                         {link.label}
                       </span>
                     </Menu.Target>
+
                     <Menu.Dropdown>
-                      {GALLERY_CATEGORIES.map((item) => (
-                        <Menu.Item
-                          key={item.label}
-                          component={Link}
-                          to={item.path}
-                        >
-                          {item.label}
+                      {categories.length === 0 ? (
+                        /* Graceful empty state inside dropdown */
+                        <Menu.Item disabled classNames={{ item: styles.menuItemEmpty }}>
+                          No galleries yet
                         </Menu.Item>
-                      ))}
+                      ) : (
+                        categories.map((cat) => (
+                          <Menu.Item
+                            key={cat._id}
+                            component={Link}
+                            to={`/styles/${cat.slug}`}
+                          >
+                            {cat.name.toUpperCase()}
+                          </Menu.Item>
+                        ))
+                      )}
                     </Menu.Dropdown>
                   </Menu>
                 );
@@ -82,7 +94,6 @@ export default function Header() {
                 </Link>
               );
             })}
-
           </div>
         </nav>
 

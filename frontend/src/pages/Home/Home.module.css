@@ -1,7 +1,68 @@
 /* ================================================
    Home.module.css
    DESIGN.md — Achromatic Editorial
-   Gallery styles live in GalleryGrid.module.css.
-   This file is reserved for Home-specific layout
-   overrides if needed in the future.
    ================================================ */
+
+/* ── Shared wrapper for loading / error / empty states ── */
+.stateWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 48px 0;
+}
+
+/* LOADING... */
+.loadingText {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #000000;
+  margin: 0;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* Error */
+.errorTitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000000;
+  margin: 0;
+}
+
+.errorText {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #5e5e5e;
+  margin: 0;
+}
+
+/* Empty */
+.emptyTitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000000;
+  margin: 0;
+}
+
+.emptyText {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #5e5e5e;
+  margin: 0;
+}

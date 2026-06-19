@@ -126,6 +126,17 @@
   color: #000000 !important;
 }
 
+/* Graceful empty state inside dropdown */
+.menuItemEmpty {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.08em !important;
+  color: #b0b0b0 !important;
+  padding: 10px 16px !important;
+  cursor: default !important;
+}
+
 /* ── Icon row ── */
 .iconRow {
   display: flex;

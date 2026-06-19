@@ -15,10 +15,23 @@ const BREAKPOINTS = {
 /**
  * GalleryGrid — Reusable masonry grid with lightbox.
  *
- * @param {Array} images  Array of { id, src, alt, height } objects.
+ * Accepts the MongoDB/Cloudinary data shape:
+ *   { _id, imageUrl, title, category, isFeatured, isHidden }
+ *
+ * Also accepts legacy local shape for backward compat:
+ *   { id, src, alt }
+ *
+ * @param {Array} images
  */
 export default function GalleryGrid({ images = [] }) {
   const [index, setIndex] = useState(-1);
+
+  // Normalise both data shapes so the grid & lightbox work with either
+  const normalised = images.map((img) => ({
+    key:    img._id   ?? img.id,
+    src:    img.imageUrl ?? img.src,
+    alt:    img.title    ?? img.alt ?? '',
+  }));
 
   return (
     <>
@@ -27,19 +40,22 @@ export default function GalleryGrid({ images = [] }) {
         className={styles.masonryGrid}
         columnClassName={styles.masonryColumn}
       >
-        {images.map((img, i) => (
+        {normalised.map((img, i) => (
           <div
-            key={img.id}
+            key={img.key ?? i}
             className={styles.item}
             style={{ cursor: 'pointer' }}
             onClick={() => setIndex(i)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && setIndex(i)}
+            aria-label={`Open ${img.alt || 'image'} in lightbox`}
           >
             <img
               className={styles.image}
               src={img.src}
               alt={img.alt}
               loading="lazy"
-              style={{ height: img.height }}
             />
           </div>
         ))}
@@ -49,7 +65,7 @@ export default function GalleryGrid({ images = [] }) {
         index={index}
         open={index >= 0}
         close={() => setIndex(-1)}
-        slides={images.map((img) => ({ src: img.src }))}
+        slides={normalised.map((img) => ({ src: img.src, alt: img.alt }))}
         plugins={[Zoom]}
         zoom={{ maxZoomPixelRatio: 3 }}
       />

@@ -1,8 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import './index.css';
 import { MantineProvider, createTheme } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import App from './App.jsx';
 
 // Monolith Editorial Design System — d:\DESIGN.md compliant
@@ -63,6 +65,7 @@ const editorialTheme = createTheme({
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <MantineProvider theme={editorialTheme}>
+      <Notifications position="top-right" autoClose={3500} limit={5} />
       <App />
     </MantineProvider>
   </StrictMode>,

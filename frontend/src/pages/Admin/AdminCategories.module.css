@@ -1,0 +1,339 @@
+/* ══════════════════════════════════════════════
+   ADMIN CATEGORIES — Achromatic Editorial
+   ══════════════════════════════════════════════ */
+
+.wrapper {
+  background: #f9f9f9;
+  min-height: 100%;
+}
+
+/* ── Page Header ── */
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 24px;
+}
+
+.pageTitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #000000;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.pageSubtitle {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #7e7576;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.addBtn {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.15em !important;
+  border-radius: 0 !important;
+  height: 36px !important;
+  padding: 0 18px !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #000000 !important;
+  flex-shrink: 0;
+  transition: background 0.1s;
+}
+
+.addBtn:hover {
+  background: #1a1c1c !important;
+}
+
+/* ── Table ── */
+.tableWrapper {
+  border: 1px solid #000000;
+  background: #ffffff;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.thead {
+  background: #000000;
+}
+
+.theadRow {
+  border-bottom: 1px solid #000000;
+}
+
+.th {
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2em !important;
+  color: #ffffff !important;
+  text-transform: uppercase !important;
+  padding: 14px 16px !important;
+  white-space: nowrap;
+  border: none !important;
+  background: #000000 !important;
+}
+
+.thRight {
+  text-align: right !important;
+}
+
+.tbody {
+  background: #ffffff;
+}
+
+.tableRow {
+  border-bottom: 1px solid #e2e2e2;
+  transition: background 0.1s;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background: #f9f9f9;
+}
+
+/* ── Cells ── */
+.tdName {
+  padding: 14px 16px !important;
+  min-width: 180px;
+}
+
+.nameText {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1c1c;
+  letter-spacing: 0.01em;
+}
+
+.tdSlug {
+  padding: 14px 16px !important;
+  min-width: 140px;
+}
+
+.slugText {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: #5e5e5e;
+  background: #f3f3f4;
+  padding: 2px 6px;
+  border: 1px solid #e2e2e2;
+  display: inline-block;
+}
+
+.tdCount {
+  padding: 14px 16px !important;
+  width: 130px;
+}
+
+.tdDate {
+  padding: 14px 16px !important;
+  width: 120px;
+}
+
+.dateText {
+  font-size: 10px;
+  color: #7e7576;
+  letter-spacing: 0.04em;
+}
+
+.tdActions {
+  padding: 14px 16px !important;
+  width: 120px;
+}
+
+/* ── Badges ── */
+.badgeFilled {
+  border-radius: 0 !important;
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #000000 !important;
+  padding: 0 8px !important;
+  height: 20px !important;
+}
+
+.badgeEmpty {
+  border-radius: 0 !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  color: #b0b0b0 !important;
+  border: 1px solid #e2e2e2 !important;
+  background: transparent !important;
+  padding: 0 8px !important;
+  height: 20px !important;
+}
+
+/* ── Action buttons ── */
+.actionView {
+  border: 1px solid #000000 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  transition: background 0.1s, color 0.1s;
+}
+
+.actionView:hover {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.actionEdit {
+  border: 1px solid #000000 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  transition: background 0.1s, color 0.1s;
+}
+
+.actionEdit:hover {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.actionDelete {
+  border-radius: 0 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #000000 !important;
+  transition: background 0.1s;
+}
+
+.actionDelete:hover {
+  background: #2f3131 !important;
+}
+
+.actionDeleteDisabled {
+  border-radius: 0 !important;
+  background: #e2e2e2 !important;
+  color: #b0b0b0 !important;
+  border: 1px solid #e2e2e2 !important;
+  cursor: not-allowed;
+}
+
+/* ── Empty / loading states ── */
+.loadingText {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #7e7576;
+  text-transform: uppercase;
+}
+
+.emptyText {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #1a1c1c;
+  text-transform: uppercase;
+}
+
+.emptyHint {
+  font-size: 11px;
+  color: #7e7576;
+}
+
+/* ── Modal ── */
+.modalContent {
+  border: 1px solid #000000 !important;
+  border-radius: 0 !important;
+  background: #ffffff;
+}
+
+.modalHeader {
+  background: #000000;
+  padding: 16px 20px;
+  border-radius: 0;
+}
+
+.modalBody {
+  padding: 24px 20px;
+}
+
+.modalTitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.fieldLabel {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #1a1c1c;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.fieldHint {
+  font-size: 10px;
+  color: #7e7576;
+  margin-bottom: 6px;
+  margin-top: 2px;
+}
+
+.required {
+  color: #000000;
+}
+
+.input {
+  border: 1px solid #000000 !important;
+  border-radius: 0 !important;
+  font-size: 12px;
+  background: #ffffff;
+  color: #1a1c1c;
+}
+
+.input:focus {
+  border-color: #000000 !important;
+  outline: none;
+}
+
+.btnPrimary {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.15em !important;
+  border-radius: 0 !important;
+  padding: 0 20px !important;
+  height: 36px !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #000000 !important;
+}
+
+.btnPrimary:hover {
+  background: #1a1c1c !important;
+}
+
+.btnOutline {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.15em !important;
+  border-radius: 0 !important;
+  padding: 0 20px !important;
+  height: 36px !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+
+.btnOutline:hover {
+  background: #f3f3f4 !important;
+}

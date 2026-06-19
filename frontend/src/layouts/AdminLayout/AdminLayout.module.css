@@ -1,0 +1,128 @@
+/* ══════════════════════════════════════════════
+   ADMIN LAYOUT — Achromatic Editorial
+   Pure black / white, 0px radius, 1px borders
+   ══════════════════════════════════════════════ */
+
+/* Sidebar (Navbar) */
+.navbar {
+  background: #ffffff;
+  border-right: 1px solid #000000 !important;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Logo block */
+.logoWrapper {
+  padding: 28px 24px 20px;
+}
+
+.logo {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #000000;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.logoSub {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: #7e7576;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Nav section label */
+.navStack {
+  padding: 16px 0;
+  flex: 1;
+}
+
+.navSection {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #b0b0b0;
+  padding: 0 24px 10px;
+  text-transform: uppercase;
+}
+
+/* Nav links */
+.navLink {
+  display: block;
+  padding: 12px 24px;
+  text-decoration: none;
+  color: #1a1c1c;
+  border-left: 2px solid transparent;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.navLink:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+.navLinkActive {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border-left-color: #000000;
+}
+
+.navLinkText {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Back link */
+.backWrapper {
+  padding: 20px 0;
+}
+
+.backLink {
+  display: block;
+  width: 100%;
+  padding: 12px 24px;
+  color: #5e5e5e;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.backLink:hover {
+  background: #f3f3f4;
+  color: #000000;
+}
+
+/* Main area */
+.main {
+  background: #f9f9f9;
+  min-height: 100vh;
+}
+
+/* Top bar */
+.topBar {
+  background: #ffffff;
+  border-bottom: 1px solid #000000;
+  padding: 14px 32px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topBarLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #5e5e5e;
+  text-transform: uppercase;
+}
+
+/* Page content */
+.content {
+  padding: 40px 32px;
+}
