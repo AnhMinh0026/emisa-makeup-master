@@ -1,27 +1,13 @@
-import { Container, Title, Text, Stack } from '@mantine/core';
+import { Container } from '@mantine/core';
+import styles from './CoursePricing.module.css';
 
 export default function CoursePricing() {
   return (
-    <Container size="md" py={120}>
-      <Stack align="center" gap="xl">
-        <Title 
-          order={1} 
-          tt="uppercase" 
-          lts="0.1em" 
-          c="black" 
-          fw={900}
-        >
-          BẢNG GIÁ KHÓA HỌC
-        </Title>
-        <Text 
-          c="gray.6" 
-          size="sm" 
-          tt="uppercase" 
-          lts="0.05em"
-        >
-          Pricing details coming soon...
-        </Text>
-      </Stack>
+    <Container size="md" className={styles.page}>
+      <div className={styles.centerStack}>
+        <h1 className={styles.mainTitle}>BẢNG GIÁ KHÓA HỌC</h1>
+        <p className={styles.placeholderText}>Pricing details coming soon...</p>
+      </div>
     </Container>
   );
 }
