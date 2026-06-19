@@ -5,6 +5,8 @@ import Home from './pages/Home/Home.jsx';
 import StyleGallery from './pages/StyleGallery/StyleGallery.jsx';
 import AdminGallery from './pages/Admin/AdminGallery.jsx';
 import AdminCategories from './pages/Admin/AdminCategories.jsx';
+import MakeupPricing from './pages/Pricing/MakeupPricing.jsx';
+import CoursePricing from './pages/Pricing/CoursePricing.jsx';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/" element={<Home />} />
           <Route path="/styles/:categorySlug" element={<StyleGallery />} />
+          <Route path="/pricing/makeup" element={<MakeupPricing />} />
+          <Route path="/pricing/courses" element={<CoursePricing />} />
           {/* <Route path="/contact" element={<Contact />} /> */}
         </Route>
 

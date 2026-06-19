@@ -70,19 +70,31 @@ const uploadImage = async (req, res) => {
 // ─────────────────────────────────────────────────────────────────────────────
 const getImages = async (req, res) => {
   try {
-    const { isFeatured, category, admin } = req.query;
+    const { isFeatured, category, admin, startDate, endDate } = req.query;
 
     let filter = {};
 
-    if (admin === 'true') {
-      // Admin view — return everything, no filter applied
-    } else if (isFeatured === 'true') {
-      filter = { isFeatured: true, isHidden: false };
-    } else if (category) {
-      filter = { category, isHidden: false };
-    } else {
-      // Default public view — exclude hidden images
-      filter = { isHidden: false };
+    // Default public view excludes hidden images
+    if (admin !== 'true') {
+      filter.isHidden = false;
+    }
+
+    if (isFeatured === 'true') {
+      filter.isFeatured = true;
+    }
+
+    if (category) {
+      filter.category = category;
+    }
+
+    // Date range filter
+    if (startDate && endDate) {
+      const end = new Date(endDate);
+      end.setHours(23, 59, 59, 999); // Ensure it covers the entire end day
+      filter.createdAt = {
+        $gte: new Date(startDate),
+        $lte: end
+      };
     }
 
     const images = await Image.find(filter).sort({ createdAt: -1 });

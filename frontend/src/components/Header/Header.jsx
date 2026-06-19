@@ -83,6 +83,47 @@ export default function Header() {
                 );
               }
 
+              if (link.label === 'PRICING') {
+                const isPricingActive = location.pathname.startsWith('/pricing');
+                return (
+                  <Menu
+                    key={link.label}
+                    shadow="none"
+                    radius={0}
+                    width={220}
+                    position="bottom"
+                    classNames={{
+                      dropdown: styles.menuDropdown,
+                      item: styles.menuItem,
+                    }}
+                  >
+                    <Menu.Target>
+                      <span
+                        className={`${styles.navLink} ${isPricingActive ? styles.navLinkActive : ''}`}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {link.label}
+                      </span>
+                    </Menu.Target>
+
+                    <Menu.Dropdown>
+                      <Menu.Item
+                        component={Link}
+                        to="/pricing/makeup"
+                      >
+                        BẢNG GIÁ MAKEUP
+                      </Menu.Item>
+                      <Menu.Item
+                        component={Link}
+                        to="/pricing/courses"
+                      >
+                        BẢNG GIÁ KHÓA HỌC
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
+                );
+              }
+
               const isActive = location.pathname === link.path;
               return (
                 <Link

@@ -13,8 +13,10 @@ import {
   Tooltip,
   Paper,
   Title,
-  Divider,
+  Select,
 } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
+import '@mantine/dates/styles.css';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import {
@@ -33,6 +35,7 @@ import ImageFormModal from '../../components/Admin/ImageFormModal.jsx';
 import styles from './AdminGallery.module.css';
 
 const API_BASE = '/api/images';
+const CATEGORIES_API = '/api/categories';
 
 export default function AdminGallery() {
   const [images, setImages] = useState([]);
@@ -42,13 +45,38 @@ export default function AdminGallery() {
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const categoryFilter = searchParams.get('category') || '';
+  
+  // Filter states
+  const [filterCategory, setFilterCategory] = useState(searchParams.get('category') || '');
+  const [filterDateRange, setFilterDateRange] = useState([null, null]);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+
+  // Fetch categories for the filter dropdown
+  useEffect(() => {
+    axios
+      .get(CATEGORIES_API)
+      .then(({ data }) => {
+        setCategoryOptions(
+          (data.categories || []).map((cat) => ({ value: cat.slug, label: cat.name }))
+        );
+      })
+      .catch((err) => console.error('Failed to load categories', err));
+  }, []);
 
   const fetchImages = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({ admin: 'true' });
-      if (categoryFilter) params.set('category', categoryFilter);
+      
+      if (filterCategory) {
+        params.set('category', filterCategory);
+      }
+      
+      if (filterDateRange[0] && filterDateRange[1]) {
+        params.set('startDate', filterDateRange[0].toISOString());
+        params.set('endDate', filterDateRange[1].toISOString());
+      }
+      
       const { data } = await axios.get(`${API_BASE}?${params.toString()}`);
       setImages(data.images || []);
     } catch (err) {
@@ -61,7 +89,7 @@ export default function AdminGallery() {
     } finally {
       setLoading(false);
     }
-  }, [categoryFilter]);
+  }, [filterCategory, filterDateRange]);
 
   useEffect(() => { fetchImages(); }, [fetchImages]);
 
@@ -89,6 +117,14 @@ export default function AdminGallery() {
     }
   };
 
+  const handleClearFilters = () => {
+    setFilterCategory('');
+    setFilterDateRange([null, null]);
+    if (searchParams.get('category')) {
+      navigate('/admin/gallery'); // clear from URL if present
+    }
+  };
+
   const renderStatus = (img) => {
     if (img.isHidden) {
       return (
@@ -109,7 +145,6 @@ export default function AdminGallery() {
 
   const rows = images.map((img) => (
     <Table.Tr key={img._id}>
-      {/* Thumbnail */}
       <Table.Td>
         <Box className={styles.thumb}>
           {img.imageUrl
@@ -118,23 +153,15 @@ export default function AdminGallery() {
           }
         </Box>
       </Table.Td>
-
-      {/* Title */}
       <Table.Td>
         <Text size="sm" fw={500} c="dark">{img.title || '—'}</Text>
       </Table.Td>
-
-      {/* Category */}
       <Table.Td>
         <Badge variant="dot" color="blue" size="sm" tt="capitalize">
           {img.category}
         </Badge>
       </Table.Td>
-
-      {/* Status */}
       <Table.Td>{renderStatus(img)}</Table.Td>
-
-      {/* Date */}
       <Table.Td>
         <Text size="xs" c="dimmed">
           {new Date(img.createdAt).toLocaleDateString('en-GB', {
@@ -142,8 +169,6 @@ export default function AdminGallery() {
           })}
         </Text>
       </Table.Td>
-
-      {/* Actions */}
       <Table.Td>
         <Group gap={6} justify="flex-end" wrap="nowrap">
           <Tooltip label="Edit" position="top">
@@ -173,6 +198,8 @@ export default function AdminGallery() {
     </Table.Tr>
   ));
 
+  const isFiltering = filterCategory !== '' || (filterDateRange[0] !== null && filterDateRange[1] !== null);
+
   return (
     <Stack gap="lg">
 
@@ -181,8 +208,7 @@ export default function AdminGallery() {
         <Box>
           <Title order={3} fw={700} c="dark.8">Gallery Manager</Title>
           <Text size="sm" c="dimmed" mt={4}>
-            {images.length} image{images.length !== 1 ? 's' : ''}
-            {categoryFilter ? ` in "${categoryFilter}"` : ' total'}
+            {images.length} image{images.length !== 1 ? 's' : ''} found
           </Text>
         </Box>
         <Button
@@ -195,28 +221,47 @@ export default function AdminGallery() {
         </Button>
       </Group>
 
-      {/* ── Active filter strip ── */}
-      {categoryFilter && (
-        <Paper withBorder p="sm" radius="md" className={styles.filterBanner}>
-          <Group justify="space-between">
-            <Group gap={8}>
-              <Text size="xs" fw={600} c="dimmed" tt="uppercase" lts="0.05em">Filtered by:</Text>
-              <Badge variant="outline" color="blue" size="sm">{categoryFilter}</Badge>
-            </Group>
-            <Button
-              variant="subtle"
-              color="gray"
-              size="xs"
-              onClick={() => navigate('/admin/gallery')}
-            >
-              Clear filter
-            </Button>
-          </Group>
-        </Paper>
-      )}
-
-      {/* ── Table card ── */}
+      {/* ── Table card with Filter Bar ── */}
       <Paper shadow="xs" radius="md" withBorder>
+        
+        {/* Filter Bar */}
+        <Box p="md" style={{ borderBottom: '1px solid #f1f3f5' }}>
+          <Group align="flex-end" gap="sm">
+            <Select
+              label="Category"
+              placeholder="All Categories"
+              data={categoryOptions}
+              value={filterCategory}
+              onChange={(val) => setFilterCategory(val || '')}
+              clearable
+              radius="md"
+              style={{ minWidth: 200 }}
+            />
+            
+            <DatePickerInput
+              type="range"
+              label="Date Range"
+              placeholder="Pick dates"
+              value={filterDateRange}
+              onChange={setFilterDateRange}
+              clearable
+              radius="md"
+              style={{ minWidth: 250 }}
+            />
+            
+            {isFiltering && (
+              <Button 
+                variant="light" 
+                color="gray" 
+                radius="md" 
+                onClick={handleClearFilters}
+              >
+                Clear Filters
+              </Button>
+            )}
+          </Group>
+        </Box>
+
         {loading ? (
           <Stack align="center" py={64} gap={12}>
             <Loader size="sm" />
@@ -227,8 +272,8 @@ export default function AdminGallery() {
             <IconPhoto size={36} color="#adb5bd" stroke={1.2} />
             <Text size="sm" fw={600} c="dark.4">No images found</Text>
             <Text size="xs" c="dimmed">
-              {categoryFilter
-                ? `No images in the "${categoryFilter}" category.`
+              {isFiltering
+                ? 'Try adjusting your filters.'
                 : 'Click "Add Image" to upload the first one.'}
             </Text>
           </Stack>
