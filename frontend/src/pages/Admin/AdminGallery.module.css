@@ -1,307 +1,37 @@
 /* ══════════════════════════════════════════════
-   ADMIN GALLERY — Achromatic Editorial
+   ADMIN GALLERY — Modern SaaS
    ══════════════════════════════════════════════ */
 
-.wrapper {
-  background: #f9f9f9;
-  min-height: 100%;
-}
-
-/* ── Page header ── */
-.pageHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding-bottom: 24px;
-}
-
-.pageTitle {
-  font-family: 'Inter', sans-serif;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  color: #000000;
-  text-transform: uppercase;
-  line-height: 1.1;
-}
-
-.pageSubtitle {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: #7e7576;
-  text-transform: uppercase;
-  margin-top: 6px;
-}
-
-/* Add button */
-.addBtn {
-  font-size: 10px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.15em !important;
-  border-radius: 0 !important;
-  height: 36px !important;
-  padding: 0 18px !important;
-  background: #000000 !important;
-  color: #ffffff !important;
-  border: 1px solid #000000 !important;
-  flex-shrink: 0;
-  transition: background 0.1s;
-}
-
-.addBtn:hover {
-  background: #1a1c1c !important;
-}
-
-/* ── Table wrapper ── */
-.tableWrapper {
-  margin-top: 0;
-  border: 1px solid #000000;
-  background: #ffffff;
-}
-
-/* Table structure */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.thead {
-  background: #000000;
-}
-
-.theadRow {
-  border-bottom: 1px solid #000000;
-}
-
-.th {
-  font-size: 9px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.2em !important;
-  color: #ffffff !important;
-  text-transform: uppercase !important;
-  padding: 14px 16px !important;
-  white-space: nowrap;
-  border: none !important;
-  background: #000000 !important;
-}
-
-.thRight {
-  text-align: right !important;
-}
-
-/* Table rows */
-.tbody {
-  background: #ffffff;
-}
-
-.tableRow {
-  border-bottom: 1px solid #e2e2e2;
-  transition: background 0.1s;
-}
-
-.tableRow:last-child {
-  border-bottom: none;
-}
-
-.tableRow:hover {
-  background: #f9f9f9;
-}
-
-/* ── Cells ── */
-.tdThumb {
-  padding: 12px 16px !important;
-  width: 72px;
-}
-
 .thumb {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   overflow: hidden;
-  border: 1px solid #e2e2e2;
+  border-radius: 6px;
+  background: #f1f3f5;
   flex-shrink: 0;
 }
 
 .thumbPlaceholder {
-  width: 48px;
-  height: 48px;
-  background: #f3f3f4;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #f1f3f5;
+  border-radius: 6px;
 }
 
-.tdTitle {
-  padding: 12px 16px !important;
-  min-width: 160px;
+.th {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #868e96 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  white-space: nowrap;
 }
 
-.titleText {
-  font-size: 12px;
-  font-weight: 500;
-  color: #1a1c1c;
-  letter-spacing: 0.02em;
-}
-
-.tdCategory {
-  padding: 12px 16px !important;
-  width: 120px;
-}
-
-.categoryText {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: #5e5e5e;
-}
-
-.tdStatus {
-  padding: 12px 16px !important;
-  width: 120px;
-}
-
-.tdDate {
-  padding: 12px 16px !important;
-  width: 120px;
-}
-
-.dateText {
-  font-size: 10px;
-  color: #7e7576;
-  letter-spacing: 0.04em;
-}
-
-.tdActions {
-  padding: 12px 16px !important;
-  width: 100px;
-}
-
-/* ── Badges ── */
-.badgeFeatured {
-  border-radius: 0 !important;
-  font-size: 8px !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.14em !important;
-  background: #000000 !important;
-  color: #ffffff !important;
-  border: 1px solid #000000 !important;
-  padding: 0 8px !important;
-  height: 20px !important;
-}
-
-.badgeHidden {
-  border-radius: 0 !important;
-  font-size: 8px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.14em !important;
-  color: #7e7576 !important;
-  border: 1px solid #b0b0b0 !important;
-  background: transparent !important;
-  padding: 0 8px !important;
-  height: 20px !important;
-}
-
-.badgeVisible {
-  border-radius: 0 !important;
-  font-size: 8px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.14em !important;
-  color: #000000 !important;
-  border: 1px solid #000000 !important;
-  background: transparent !important;
-  padding: 0 8px !important;
-  height: 20px !important;
-}
-
-/* ── Action buttons ── */
-.actionEdit {
-  border: 1px solid #000000 !important;
-  border-radius: 0 !important;
-  background: #ffffff !important;
-  color: #000000 !important;
-  transition: background 0.1s, color 0.1s;
-}
-
-.actionEdit:hover {
-  background: #000000 !important;
-  color: #ffffff !important;
-}
-
-.actionDelete {
-  border-radius: 0 !important;
-  background: #000000 !important;
-  color: #ffffff !important;
-  border: 1px solid #000000 !important;
-  transition: background 0.1s;
-}
-
-.actionDelete:hover {
-  background: #2f3131 !important;
-}
-
-/* ── Active filter banner ── */
 .filterBanner {
-  background: #f9f9f9;
-  border: 1px solid #000000;
-  border-top: none;
-  padding: 10px 16px;
-  margin-bottom: 0;
-}
-
-.filterLabel {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: #7e7576;
-  text-transform: uppercase;
-}
-
-.filterSlug {
-  font-family: 'Courier New', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  color: #000000;
-  background: #e2e2e2;
-  padding: 2px 8px;
-  border: 1px solid #000000;
-}
-
-.clearFilterBtn {
-  font-size: 9px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.14em !important;
-  border-radius: 0 !important;
-  height: 28px !important;
-  padding: 0 12px !important;
-  border: 1px solid #000000 !important;
-  color: #000000 !important;
-  background: #ffffff !important;
-  transition: background 0.1s;
-}
-
-.clearFilterBtn:hover {
-  background: #000000 !important;
-  color: #ffffff !important;
-}
-
-/* ── Empty / loading states ── */
-.loadingText {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: #7e7576;
-  text-transform: uppercase;
-}
-
-.emptyText {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: #1a1c1c;
-  text-transform: uppercase;
-}
-
-.emptyHint {
-  font-size: 11px;
-  color: #7e7576;
+  background: #f8f9ff;
 }

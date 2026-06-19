@@ -1,11 +1,12 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { AppShell, Text, Stack, UnstyledButton, Group, Divider, Box } from '@mantine/core';
+import { AppShell, Text, Stack, UnstyledButton, Group, Box } from '@mantine/core';
 import {
   IconPhoto,
   IconTag,
   IconSettings,
   IconArrowLeft,
   IconLayoutDashboard,
+  IconChevronRight,
 } from '@tabler/icons-react';
 import styles from './AdminLayout.module.css';
 
@@ -20,22 +21,21 @@ export default function AdminLayout() {
 
   return (
     <AppShell
-      navbar={{ width: 240, breakpoint: 'sm' }}
+      navbar={{ width: 230, breakpoint: 'sm' }}
       padding={0}
     >
       {/* ── SIDEBAR ── */}
       <AppShell.Navbar className={styles.navbar}>
+
         {/* Logo */}
         <Box className={styles.logoWrapper}>
           <Text className={styles.logo}>EMISA</Text>
-          <Text className={styles.logoSub}>ADMIN PANEL</Text>
+          <Text className={styles.logoSub}>Admin Dashboard</Text>
         </Box>
-
-        <Divider color="#000" />
 
         {/* Navigation */}
         <Stack gap={0} className={styles.navStack}>
-          <Text className={styles.navSection}>NAVIGATION</Text>
+          <Text className={styles.navSection}>Navigation</Text>
 
           {NAV_LINKS.map(({ label, to, icon: Icon }) => (
             <NavLink
@@ -45,15 +45,13 @@ export default function AdminLayout() {
                 `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
               }
             >
-              <Group gap={12} wrap="nowrap">
-                <Icon size={15} stroke={1.5} />
+              <Group gap={10} wrap="nowrap">
+                <Icon size={16} stroke={1.8} />
                 <Text className={styles.navLinkText}>{label}</Text>
               </Group>
             </NavLink>
           ))}
         </Stack>
-
-        <Divider color="#000" />
 
         {/* Back to site */}
         <Box className={styles.backWrapper}>
@@ -61,21 +59,23 @@ export default function AdminLayout() {
             className={styles.backLink}
             onClick={() => navigate('/')}
           >
-            <Group gap={10} wrap="nowrap">
-              <IconArrowLeft size={14} stroke={1.5} />
+            <Group gap={8} wrap="nowrap">
+              <IconArrowLeft size={14} stroke={1.8} />
               <Text className={styles.navLinkText}>Back to Website</Text>
             </Group>
           </UnstyledButton>
         </Box>
+
       </AppShell.Navbar>
 
       {/* ── MAIN CONTENT ── */}
       <AppShell.Main className={styles.main}>
+
         {/* Top bar */}
         <Box className={styles.topBar}>
           <Group gap={8}>
-            <IconLayoutDashboard size={14} stroke={1.5} />
-            <Text className={styles.topBarLabel}>ADMIN DASHBOARD</Text>
+            <IconLayoutDashboard size={15} stroke={1.5} color="#868e96" />
+            <Text className={styles.topBarLabel}>Admin Dashboard</Text>
           </Group>
         </Box>
 
@@ -83,6 +83,7 @@ export default function AdminLayout() {
         <Box className={styles.content}>
           <Outlet />
         </Box>
+
       </AppShell.Main>
     </AppShell>
   );

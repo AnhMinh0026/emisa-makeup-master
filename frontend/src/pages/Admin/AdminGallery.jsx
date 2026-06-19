@@ -10,8 +10,10 @@ import {
   ActionIcon,
   Loader,
   Stack,
-  Divider,
   Tooltip,
+  Paper,
+  Title,
+  Divider,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
@@ -24,7 +26,6 @@ import {
   IconPhoto,
   IconEyeOff,
   IconStar,
-  IconFilterOff,
 } from '@tabler/icons-react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -43,13 +44,11 @@ export default function AdminGallery() {
   const navigate = useNavigate();
   const categoryFilter = searchParams.get('category') || '';
 
-  // ── Fetch images — respects category filter from URL ───────────────────────
   const fetchImages = useCallback(async () => {
     setLoading(true);
     try {
       const params = new URLSearchParams({ admin: 'true' });
       if (categoryFilter) params.set('category', categoryFilter);
-
       const { data } = await axios.get(`${API_BASE}?${params.toString()}`);
       setImages(data.images || []);
     } catch (err) {
@@ -58,34 +57,26 @@ export default function AdminGallery() {
         message: err?.response?.data?.message || 'Could not load images.',
         color: 'red',
         icon: <IconX size={16} />,
-        radius: 0,
       });
     } finally {
       setLoading(false);
     }
   }, [categoryFilter]);
 
-  useEffect(() => {
-    fetchImages();
-  }, [fetchImages]);
+  useEffect(() => { fetchImages(); }, [fetchImages]);
 
   const handleAdd = () => { setSelectedImage(null); openModal(); };
   const handleEdit = (img) => { setSelectedImage(img); openModal(); };
 
   const handleDelete = async (img) => {
-    const confirmed = window.confirm(
-      `Delete "${img.title || 'Untitled'}"?\n\nThis will permanently remove the image from Cloudinary and the database.`
-    );
-    if (!confirmed) return;
-
+    if (!window.confirm(`Delete "${img.title || 'Untitled'}"? This cannot be undone.`)) return;
     try {
       await axios.delete(`${API_BASE}/${img._id}`);
       notifications.show({
         title: 'Deleted',
         message: `"${img.title || 'Untitled'}" was removed.`,
-        color: 'dark',
+        color: 'green',
         icon: <IconCheck size={16} />,
-        radius: 0,
       });
       fetchImages();
     } catch (err) {
@@ -94,7 +85,6 @@ export default function AdminGallery() {
         message: err?.response?.data?.message || 'Could not delete image.',
         color: 'red',
         icon: <IconX size={16} />,
-        radius: 0,
       });
     }
   };
@@ -102,79 +92,80 @@ export default function AdminGallery() {
   const renderStatus = (img) => {
     if (img.isHidden) {
       return (
-        <Badge radius={0} variant="outline" color="gray"
-          leftSection={<IconEyeOff size={10} />}
-          classNames={{ root: styles.badgeHidden }}>
-          HIDDEN
+        <Badge variant="light" color="gray" size="sm" leftSection={<IconEyeOff size={10} />}>
+          Hidden
         </Badge>
       );
     }
     if (img.isFeatured) {
       return (
-        <Badge radius={0} variant="filled" color="dark"
-          leftSection={<IconStar size={10} />}
-          classNames={{ root: styles.badgeFeatured }}>
-          FEATURED
+        <Badge variant="light" color="yellow" size="sm" leftSection={<IconStar size={10} />}>
+          Featured
         </Badge>
       );
     }
-    return (
-      <Badge radius={0} variant="outline" color="dark"
-        classNames={{ root: styles.badgeVisible }}>
-        VISIBLE
-      </Badge>
-    );
+    return <Badge variant="light" color="green" size="sm">Visible</Badge>;
   };
 
   const rows = images.map((img) => (
-    <Table.Tr key={img._id} className={styles.tableRow}>
-      <Table.Td className={styles.tdThumb}>
+    <Table.Tr key={img._id}>
+      {/* Thumbnail */}
+      <Table.Td>
         <Box className={styles.thumb}>
-          {img.imageUrl ? (
-            <Image src={img.imageUrl} alt={img.title} fit="cover" w={48} h={48} radius={0} />
-          ) : (
-            <Box className={styles.thumbPlaceholder}>
-              <IconPhoto size={20} color="#b0b0b0" />
-            </Box>
-          )}
+          {img.imageUrl
+            ? <Image src={img.imageUrl} alt={img.title} fit="cover" w={44} h={44} radius="sm" />
+            : <Box className={styles.thumbPlaceholder}><IconPhoto size={18} color="#adb5bd" /></Box>
+          }
         </Box>
       </Table.Td>
 
-      <Table.Td className={styles.tdTitle}>
-        <Text className={styles.titleText}>{img.title || '—'}</Text>
+      {/* Title */}
+      <Table.Td>
+        <Text size="sm" fw={500} c="dark">{img.title || '—'}</Text>
       </Table.Td>
 
-      <Table.Td className={styles.tdCategory}>
-        <Text className={styles.categoryText}>{img.category?.toUpperCase()}</Text>
+      {/* Category */}
+      <Table.Td>
+        <Badge variant="dot" color="blue" size="sm" tt="capitalize">
+          {img.category}
+        </Badge>
       </Table.Td>
 
-      <Table.Td className={styles.tdStatus}>{renderStatus(img)}</Table.Td>
+      {/* Status */}
+      <Table.Td>{renderStatus(img)}</Table.Td>
 
-      <Table.Td className={styles.tdDate}>
-        <Text className={styles.dateText}>
+      {/* Date */}
+      <Table.Td>
+        <Text size="xs" c="dimmed">
           {new Date(img.createdAt).toLocaleDateString('en-GB', {
             day: '2-digit', month: 'short', year: 'numeric',
           })}
         </Text>
       </Table.Td>
 
-      <Table.Td className={styles.tdActions}>
-        <Group gap={4} wrap="nowrap" justify="flex-end">
-          <Tooltip label="Edit" position="top" withArrow={false} radius={0}>
-            <ActionIcon variant="outline" color="dark" radius={0} size={32}
+      {/* Actions */}
+      <Table.Td>
+        <Group gap={6} justify="flex-end" wrap="nowrap">
+          <Tooltip label="Edit" position="top">
+            <ActionIcon
+              variant="subtle"
+              color="gray"
+              size={32}
               onClick={() => handleEdit(img)}
-              classNames={{ root: styles.actionEdit }}
-              aria-label={`Edit ${img.title}`}>
-              <IconPencil size={14} stroke={1.5} />
+              aria-label={`Edit ${img.title}`}
+            >
+              <IconPencil size={15} stroke={1.7} />
             </ActionIcon>
           </Tooltip>
-
-          <Tooltip label="Delete" position="top" withArrow={false} radius={0}>
-            <ActionIcon variant="filled" color="dark" radius={0} size={32}
+          <Tooltip label="Delete" position="top">
+            <ActionIcon
+              variant="subtle"
+              color="red"
+              size={32}
               onClick={() => handleDelete(img)}
-              classNames={{ root: styles.actionDelete }}
-              aria-label={`Delete ${img.title}`}>
-              <IconTrash size={14} stroke={1.5} />
+              aria-label={`Delete ${img.title}`}
+            >
+              <IconTrash size={15} stroke={1.7} />
             </ActionIcon>
           </Tooltip>
         </Group>
@@ -183,95 +174,88 @@ export default function AdminGallery() {
   ));
 
   return (
-    <Box className={styles.wrapper}>
+    <Stack gap="lg">
 
-      {/* ── Page Header ── */}
-      <Box className={styles.pageHeader}>
+      {/* ── Page header ── */}
+      <Group justify="space-between" align="flex-start">
         <Box>
-          <Text className={styles.pageTitle}>GALLERY MANAGER</Text>
-          <Text className={styles.pageSubtitle}>
+          <Title order={3} fw={700} c="dark.8">Gallery Manager</Title>
+          <Text size="sm" c="dimmed" mt={4}>
             {images.length} image{images.length !== 1 ? 's' : ''}
-            {categoryFilter ? ` in "${categoryFilter}"` : ' in collection'}
+            {categoryFilter ? ` in "${categoryFilter}"` : ' total'}
           </Text>
         </Box>
         <Button
-          radius={0}
-          color="dark"
-          leftSection={<IconPlus size={14} />}
+          leftSection={<IconPlus size={15} />}
           onClick={handleAdd}
-          classNames={{ root: styles.addBtn }}
+          radius="md"
+          color="blue"
         >
-          ADD IMAGE
+          Add Image
         </Button>
-      </Box>
+      </Group>
 
-      {/* ── Active Filter Banner ── */}
+      {/* ── Active filter strip ── */}
       {categoryFilter && (
-        <Box className={styles.filterBanner}>
-          <Group justify="space-between" align="center">
-            <Group gap={10}>
-              <Text className={styles.filterLabel}>FILTERED BY:</Text>
-              <Text className={styles.filterSlug}>{categoryFilter.toUpperCase()}</Text>
+        <Paper withBorder p="sm" radius="md" className={styles.filterBanner}>
+          <Group justify="space-between">
+            <Group gap={8}>
+              <Text size="xs" fw={600} c="dimmed" tt="uppercase" lts="0.05em">Filtered by:</Text>
+              <Badge variant="outline" color="blue" size="sm">{categoryFilter}</Badge>
             </Group>
             <Button
-              variant="outline"
-              radius={0}
+              variant="subtle"
+              color="gray"
               size="xs"
-              color="dark"
-              leftSection={<IconFilterOff size={12} />}
               onClick={() => navigate('/admin/gallery')}
-              classNames={{ root: styles.clearFilterBtn }}
             >
-              CLEAR FILTER
+              Clear filter
             </Button>
           </Group>
-        </Box>
+        </Paper>
       )}
 
-      <Divider color="#000" />
-
-      {/* ── Table ── */}
-      <Box className={styles.tableWrapper}>
+      {/* ── Table card ── */}
+      <Paper shadow="xs" radius="md" withBorder>
         {loading ? (
-          <Stack align="center" py={80} gap={16}>
-            <Loader color="dark" size="sm" />
-            <Text className={styles.loadingText}>LOADING COLLECTION...</Text>
+          <Stack align="center" py={64} gap={12}>
+            <Loader size="sm" />
+            <Text size="sm" c="dimmed">Loading images…</Text>
           </Stack>
         ) : images.length === 0 ? (
-          <Stack align="center" py={80} gap={16}>
-            <IconPhoto size={40} color="#b0b0b0" stroke={1} />
-            <Text className={styles.emptyText}>NO IMAGES FOUND</Text>
-            <Text className={styles.emptyHint}>
+          <Stack align="center" py={64} gap={12}>
+            <IconPhoto size={36} color="#adb5bd" stroke={1.2} />
+            <Text size="sm" fw={600} c="dark.4">No images found</Text>
+            <Text size="xs" c="dimmed">
               {categoryFilter
                 ? `No images in the "${categoryFilter}" category.`
                 : 'Click "Add Image" to upload the first one.'}
             </Text>
           </Stack>
         ) : (
-          <Table striped={false} highlightOnHover={false}
-            withTableBorder={false} withColumnBorders={false}
-            classNames={{ table: styles.table, thead: styles.thead, tbody: styles.tbody }}>
+          <Table verticalSpacing="sm" horizontalSpacing="md" highlightOnHover>
             <Table.Thead>
-              <Table.Tr className={styles.theadRow}>
-                <Table.Th className={styles.th}>—</Table.Th>
-                <Table.Th className={styles.th}>TITLE</Table.Th>
-                <Table.Th className={styles.th}>CATEGORY</Table.Th>
-                <Table.Th className={styles.th}>STATUS</Table.Th>
-                <Table.Th className={styles.th}>UPLOADED</Table.Th>
-                <Table.Th className={`${styles.th} ${styles.thRight}`}>ACTIONS</Table.Th>
+              <Table.Tr>
+                <Table.Th className={styles.th} w={68}>—</Table.Th>
+                <Table.Th className={styles.th}>Title</Table.Th>
+                <Table.Th className={styles.th}>Category</Table.Th>
+                <Table.Th className={styles.th}>Status</Table.Th>
+                <Table.Th className={styles.th}>Uploaded</Table.Th>
+                <Table.Th className={styles.th} ta="right">Actions</Table.Th>
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>
           </Table>
         )}
-      </Box>
+      </Paper>
 
+      {/* ── Modal ── */}
       <ImageFormModal
         opened={modalOpened}
         onClose={closeModal}
         image={selectedImage}
         onSuccess={fetchImages}
       />
-    </Box>
+    </Stack>
   );
 }

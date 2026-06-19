@@ -1,12 +1,12 @@
 /* ══════════════════════════════════════════════
-   ADMIN LAYOUT — Achromatic Editorial
-   Pure black / white, 0px radius, 1px borders
+   ADMIN LAYOUT — Modern SaaS / Enterprise
+   Soft whites, light grays, rounded corners
    ══════════════════════════════════════════════ */
 
-/* Sidebar (Navbar) */
+/* Sidebar */
 .navbar {
   background: #ffffff;
-  border-right: 1px solid #000000 !important;
+  border-right: 1px solid #e9ecef;
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -15,114 +15,113 @@
 
 /* Logo block */
 .logoWrapper {
-  padding: 28px 24px 20px;
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid #f1f3f5;
 }
 
 .logo {
   font-family: 'Inter', sans-serif;
-  font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  color: #000000;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #1c7ed6;
   line-height: 1;
-  text-transform: uppercase;
 }
 
 .logoSub {
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  color: #7e7576;
-  text-transform: uppercase;
-  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #adb5bd;
+  margin-top: 3px;
 }
 
 /* Nav section label */
 .navStack {
-  padding: 16px 0;
+  padding: 12px 8px;
   flex: 1;
 }
 
 .navSection {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: #b0b0b0;
-  padding: 0 24px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #adb5bd;
+  padding: 0 8px 8px;
   text-transform: uppercase;
 }
 
 /* Nav links */
 .navLink {
   display: block;
-  padding: 12px 24px;
+  padding: 9px 12px;
   text-decoration: none;
-  color: #1a1c1c;
-  border-left: 2px solid transparent;
-  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  color: #495057;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .navLink:hover {
-  background: #000000;
-  color: #ffffff;
+  background: #f1f3f5;
+  color: #212529;
 }
 
 .navLinkActive {
-  background: #000000 !important;
-  color: #ffffff !important;
-  border-left-color: #000000;
+  background: #e7f5ff !important;
+  color: #1c7ed6 !important;
+  font-weight: 600;
 }
 
 .navLinkText {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0;
 }
 
 /* Back link */
 .backWrapper {
-  padding: 20px 0;
+  padding: 8px;
+  border-top: 1px solid #f1f3f5;
 }
 
 .backLink {
   display: block;
   width: 100%;
-  padding: 12px 24px;
-  color: #5e5e5e;
-  transition: background 0.12s ease, color 0.12s ease;
+  padding: 9px 12px;
+  color: #868e96;
+  border-radius: 8px;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .backLink:hover {
-  background: #f3f3f4;
-  color: #000000;
+  background: #f1f3f5;
+  color: #495057;
 }
 
 /* Main area */
 .main {
-  background: #f9f9f9;
+  background: #f8f9fa;
   min-height: 100vh;
 }
 
 /* Top bar */
 .topBar {
   background: #ffffff;
-  border-bottom: 1px solid #000000;
-  padding: 14px 32px;
+  border-bottom: 1px solid #e9ecef;
+  padding: 14px 28px;
   position: sticky;
   top: 0;
   z-index: 10;
 }
 
 .topBarLabel {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: #5e5e5e;
-  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  color: #868e96;
 }
 
 /* Page content */
 .content {
-  padding: 40px 32px;
+  padding: 28px 28px;
 }
