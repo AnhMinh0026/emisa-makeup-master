@@ -12,6 +12,7 @@ import MakeupPricing from './pages/Pricing/MakeupPricing.jsx';
 import CoursePricing from './pages/Pricing/CoursePricing.jsx';
 import CourseDetail from './pages/Courses/CourseDetail.jsx';
 import Contact from './pages/Contact/Contact.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 /**
  * The root application component configuring client and admin routing.
@@ -21,6 +22,7 @@ import Contact from './pages/Contact/Contact.jsx';
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {/* --- Client-Facing Routes --- */}
         <Route element={<ClientLayout />}>
