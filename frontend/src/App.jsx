@@ -7,8 +7,10 @@ import AdminGallery from './pages/Admin/AdminGallery.jsx';
 import AdminCategories from './pages/Admin/AdminCategories.jsx';
 import AdminContact from './pages/Admin/AdminContact.jsx';
 import AdminServices from './pages/Admin/AdminServices.jsx';
+import AdminCourses from './pages/Admin/AdminCourses.jsx';
 import MakeupPricing from './pages/Pricing/MakeupPricing.jsx';
 import CoursePricing from './pages/Pricing/CoursePricing.jsx';
+import CourseDetail from './pages/Courses/CourseDetail.jsx';
 import Contact from './pages/Contact/Contact.jsx';
 
 /**
@@ -27,6 +29,7 @@ function App() {
           <Route path="/styles/:categorySlug" element={<StyleGallery />} />
           <Route path="/pricing/makeup" element={<MakeupPricing />} />
           <Route path="/pricing/courses" element={<CoursePricing />} />
+          <Route path="/pricing/courses/:id" element={<CourseDetail />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
 
@@ -35,6 +38,7 @@ function App() {
           <Route index element={<AdminGallery />} />
           <Route path="gallery" element={<AdminGallery />} />
           <Route path="categories" element={<AdminCategories />} />
+          <Route path="courses" element={<AdminCourses />} />
           <Route path="services" element={<AdminServices />} />
           <Route path="contact" element={<AdminContact />} />
         </Route>

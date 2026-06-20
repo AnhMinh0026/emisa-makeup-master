@@ -56,7 +56,7 @@ export default function Contact() {
           fw={900}
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
-          Quý khách có nhu cầu đặt lịch makeup,<br />
+          Quý khách có nhu cầu đặt lịch makeup, đăng ký khóa học<br />
           vui lòng liên hệ trực tiếp đến Emisa:
         </Text>
       </Box>

@@ -8,6 +8,7 @@ const imageRoutes = require('./routes/imageRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
+const courseRoutes = require('./routes/courseRoutes');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/api/images', imageRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/courses', courseRoutes);
 
 /* --- Server Initialization --- */
 const PORT = process.env.PORT || 5000;

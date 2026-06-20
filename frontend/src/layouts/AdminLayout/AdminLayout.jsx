@@ -9,12 +9,14 @@ import {
   IconChevronRight,
   IconAddressBook,
   IconCurrencyDong,
+  IconSchool,
 } from '@tabler/icons-react';
 import styles from './AdminLayout.module.css';
 
 const NAV_LINKS = [
   { label: 'Gallery Manager', to: '/admin/gallery', icon: IconPhoto },
   { label: 'Categories', to: '/admin/categories', icon: IconTag },
+  { label: 'Courses', to: '/admin/courses', icon: IconSchool },
   { label: 'Pricing Packages', to: '/admin/services', icon: IconCurrencyDong },
   { label: 'Contact Settings', to: '/admin/contact', icon: IconAddressBook },
   { label: 'Settings', to: '/admin/settings', icon: IconSettings },

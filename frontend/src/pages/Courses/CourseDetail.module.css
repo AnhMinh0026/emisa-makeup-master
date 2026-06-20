@@ -1,0 +1,177 @@
+/* ================================================
+   CourseDetail.module.css
+   DESIGN.md — Achromatic Editorial
+   ================================================ */
+
+.pageWrapper {
+  width: 100%;
+  background-color: #ffffff;
+}
+
+/* --- HERO BANNER --- */
+.heroBanner {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .heroBanner {
+    height: 450px;
+  }
+}
+
+.heroContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.backBtn {
+  align-self: flex-start;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #000000;
+  border-radius: 0;
+  padding: 0;
+}
+
+.backBtn:hover {
+  background-color: transparent;
+  color: #555555;
+}
+
+.heroTitle {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* --- DETAILS SECTION --- */
+.contentContainer {
+  padding-top: 60px;
+  padding-bottom: 100px;
+}
+
+.metaBox {
+  border-top: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  padding: 24px 0;
+  margin-bottom: 40px;
+}
+
+.metaColLeft {
+  border-right: 1px solid #e0e0e0;
+}
+
+.metaColRight {
+  padding-left: 24px;
+}
+
+.metaLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #666666;
+  margin-bottom: 8px;
+}
+
+.metaValue {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -0.01em;
+}
+
+.overviewText {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #000000;
+}
+
+.detailsBox {
+  margin-top: 16px;
+  margin-bottom: 40px;
+}
+
+.detailsText {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #333333;
+}
+
+.ctaButton {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.ctaButton:hover {
+  background-color: #333333;
+  transform: translateY(-2px);
+}
+
+/* --- STATES --- */
+.stateWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0;
+  height: 60vh;
+}
+
+.loadingText {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #000000;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.errorText {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
