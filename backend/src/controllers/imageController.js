@@ -2,7 +2,14 @@ const streamifier = require('streamifier');
 const Image = require('../models/Image');
 const cloudinary = require('../config/cloudinary');
 
-// ─── Helper: upload a buffer to Cloudinary via stream ────────────────────────
+/* --- Cloudinary Utility Functions --- */
+/**
+ * Uploads a file buffer to Cloudinary using an upload stream.
+ *
+ * @param {Buffer} buffer - The file buffer to upload.
+ * @param {string} [folder='emisa-gallery'] - The destination folder in Cloudinary.
+ * @returns {Promise<Object>} A promise resolving to the Cloudinary upload result.
+ */
 const uploadToCloudinary = (buffer, folder = 'emisa-gallery') => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
@@ -16,20 +23,30 @@ const uploadToCloudinary = (buffer, folder = 'emisa-gallery') => {
   });
 };
 
-// ─── Helper: safely delete a Cloudinary asset ────────────────────────────────
+/**
+ * Safely removes an asset from Cloudinary.
+ * Errors are logged but caught to ensure continuous execution of subsequent operations.
+ *
+ * @param {string} publicId - The Cloudinary public identifier of the asset.
+ * @returns {Promise<void>}
+ */
 const deleteFromCloudinary = async (publicId) => {
   try {
     await cloudinary.uploader.destroy(publicId);
   } catch (err) {
-    // Log but don't surface to caller — we still want DB operations to proceed
+    // Log the error internally without surfacing it to the caller to allow subsequent database operations to proceed.
     console.error(`[Cloudinary] Failed to delete asset "${publicId}":`, err.message);
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// POST /api/images
-// Body (multipart): image (file), category (string), title?, isFeatured?, isHidden?
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Uploads a new image and persists its metadata to the database.
+ * Route: POST /api/images
+ *
+ * @param {import('express').Request} req - The Express request object containing the file and metadata.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the newly created image document.
+ */
 const uploadImage = async (req, res) => {
   try {
     if (!req.file) {
@@ -42,7 +59,7 @@ const uploadImage = async (req, res) => {
       return res.status(400).json({ message: 'Category is required.' });
     }
 
-    // Upload buffer to Cloudinary
+    // Upload the file buffer to the external storage provider.
     const cloudResult = await uploadToCloudinary(req.file.buffer);
 
     const image = await Image.create({
@@ -61,20 +78,21 @@ const uploadImage = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// GET /api/images
-// Query params:
-//   ?isFeatured=true  → featured, non-hidden images only
-//   ?category=bridal  → non-hidden images in that category
-//   ?admin=true       → ALL images (including hidden)
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Retrieves a list of images based on specified filter criteria.
+ * Route: GET /api/images
+ *
+ * @param {import('express').Request} req - The Express request object.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the list of images.
+ */
 const getImages = async (req, res) => {
   try {
     const { isFeatured, category, admin, startDate, endDate } = req.query;
 
     let filter = {};
 
-    // Default public view excludes hidden images
+    // Exclude hidden images from the default public view.
     if (admin !== 'true') {
       filter.isHidden = false;
     }
@@ -87,10 +105,10 @@ const getImages = async (req, res) => {
       filter.category = category;
     }
 
-    // Date range filter
+    // Apply a date range filter if both start and end dates are provided.
     if (startDate && endDate) {
       const end = new Date(endDate);
-      end.setHours(23, 59, 59, 999); // Ensure it covers the entire end day
+      // Extend the end date to cover the entire day.
       filter.createdAt = {
         $gte: new Date(startDate),
         $lte: end
@@ -106,11 +124,15 @@ const getImages = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PUT /api/images/:id
-// Body (multipart): title?, category?, isFeatured?, isHidden?, image (file)?
-// If a new file is included, the old Cloudinary asset is replaced safely.
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Updates an existing image entry.
+ * Route: PUT /api/images/:id
+ * If a new file is provided, the legacy Cloudinary asset is safely replaced.
+ *
+ * @param {import('express').Request} req - The Express request object containing the image ID, metadata, and optional new file.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the updated image document.
+ */
 const updateImage = async (req, res) => {
   try {
     const image = await Image.findById(req.params.id);
@@ -120,24 +142,24 @@ const updateImage = async (req, res) => {
 
     const { title, category, isFeatured, isHidden } = req.body;
 
-    // Build the fields to update
+    // Construct the object containing fields to be updated.
     const updates = {};
     if (title !== undefined) updates.title = title;
     if (category !== undefined) updates.category = category;
     if (isFeatured !== undefined) updates.isFeatured = isFeatured === 'true' || isFeatured === true;
     if (isHidden !== undefined) updates.isHidden = isHidden === 'true' || isHidden === true;
 
-    // ── File replacement flow ─────────────────────────────────────────────────
+    /* --- File Replacement Flow --- */
     if (req.file) {
       const oldPublicId = image.publicId;
 
-      // 1. Upload the new file first — if this fails, old asset is untouched
+      // Upload the new file first to ensure the original asset remains intact if the upload fails.
       const cloudResult = await uploadToCloudinary(req.file.buffer);
 
       updates.imageUrl = cloudResult.secure_url;
       updates.publicId = cloudResult.public_id;
 
-      // 2. Only delete the old asset after the new one is successfully stored
+      // Remove the legacy asset only after the new file is successfully persisted.
       await deleteFromCloudinary(oldPublicId);
     }
 
@@ -154,10 +176,15 @@ const updateImage = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DELETE /api/images/:id
-// Removes the asset from Cloudinary, then deletes the DB document.
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Deletes an image.
+ * Route: DELETE /api/images/:id
+ * Removes the asset from Cloudinary prior to deleting the database document.
+ *
+ * @param {import('express').Request} req - The Express request object containing the image ID.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response confirming the deletion.
+ */
 const deleteImage = async (req, res) => {
   try {
     const image = await Image.findById(req.params.id);
@@ -165,10 +192,10 @@ const deleteImage = async (req, res) => {
       return res.status(404).json({ message: 'Image not found.' });
     }
 
-    // Delete from Cloudinary first
+    // Remove the asset from external storage first.
     await cloudinary.uploader.destroy(image.publicId);
 
-    // Then remove from MongoDB
+    // Remove the corresponding document from the database.
     await Image.findByIdAndDelete(req.params.id);
 
     return res.status(200).json({ message: 'Image deleted successfully.' });

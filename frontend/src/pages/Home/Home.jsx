@@ -3,6 +3,12 @@ import axios from 'axios';
 import GalleryGrid from '../../components/Gallery/GalleryGrid.jsx';
 import styles from './Home.module.css';
 
+/**
+ * Renders the homepage displaying a gallery grid of featured images.
+ * Fetches only images marked as 'isFeatured' from the backend.
+ *
+ * @returns {JSX.Element} The home page component.
+ */
 export default function Home() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);

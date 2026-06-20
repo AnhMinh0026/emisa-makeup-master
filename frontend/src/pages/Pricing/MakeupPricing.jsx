@@ -4,13 +4,20 @@ import pricingImage from '../../assets/Pricing/EmisaPrice.jpg';
 import PricingList from '../../components/Pricing/PricingList.jsx';
 import styles from './MakeupPricing.module.css';
 
+/**
+ * Renders the makeup services pricing page.
+ * Displays a hero section with marketing copy alongside the dynamic pricing list.
+ *
+ * @returns {JSX.Element} The makeup pricing page component.
+ */
 export default function MakeupPricing() {
   return (
     <Container size="xl" className={styles.page}>
-      {/* ── Hero Section ── */}
+    <Container size="xl" className={styles.page}>
+      {/* --- Hero Section --- */}
       <div className={styles.grid}>
 
-        {/* Left Column: Image */}
+        {/* --- Left Column: Image --- */}
         <div
           className={styles.imageWrapper}
           style={{ backgroundImage: `url(${pricingImage})` }}
@@ -18,15 +25,15 @@ export default function MakeupPricing() {
           aria-label="Emisa Makeup Pricing"
         />
 
-        {/* Right Column: Text */}
+        {/* --- Right Column: Text --- */}
         <div className={styles.textColumn}>
 
-          {/* Header */}
+          {/* --- Header --- */}
           <div className={styles.headerGroup}>
             <h2 className={styles.mainTitle}>BẢNG GIÁ MAKEUP</h2>
           </div>
 
-          {/* Paragraphs */}
+          {/* --- Paragraphs --- */}
           <div className={styles.paragraphGroup}>
             <p className={styles.bodyText}>
               Bạn đang quan tâm về giá dịch vụ trang điểm tại Emisa là bao nhiêu? Nếu trang điểm cô dâu, dự tiệc tại nhà thì mức giá makeup như thế nào? Emisa xin đưa ra bảng giá makeup chính thức khu vực TP. Hồ Chí Minh để bạn tham khảo như sau:
@@ -36,7 +43,7 @@ export default function MakeupPricing() {
             </p>
           </div>
 
-          {/* Bullet List */}
+          {/* --- Bullet List --- */}
           <List
             className={styles.bulletList}
             icon={
@@ -64,7 +71,7 @@ export default function MakeupPricing() {
         </div>
       </div>
 
-      {/* ── Pricing Packages Section ── */}
+      {/* --- Pricing Packages Section --- */}
       <Box className={styles.pricingSection}>
         <PricingList category="makeup" />
       </Box>

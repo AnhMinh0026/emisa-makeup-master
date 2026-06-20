@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
-// ─── Singleton Contact Schema ─────────────────────────────────────────────────
-// Only one document will ever exist in this collection.
-// Use getContact / updateContact (upsert) to manage it.
+/* --- Singleton Contact Schema --- */
+/**
+ * Mongoose schema representing global contact information.
+ * Designed to operate as a singleton; only one document should exist in the collection.
+ * It is recommended to use the provided getContact and updateContact (upsert) controllers to manage it.
+ */
 const contactSchema = new mongoose.Schema(
   {
     phone: {

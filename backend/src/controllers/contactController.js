@@ -1,10 +1,14 @@
 const Contact = require('../models/Contact');
 
-// ─────────────────────────────────────────────────────────────────────────────
-// GET /api/contact
-// Fetch the singleton contact document.
-// Returns an empty default object if none exists yet.
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Retrieves the singleton contact document.
+ * Route: GET /api/contact
+ * Returns a default empty object if the contact document does not exist.
+ *
+ * @param {import('express').Request} req - The Express request object.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the contact details.
+ */
 const getContact = async (req, res) => {
   try {
     const contact = await Contact.findOne();
@@ -24,11 +28,15 @@ const getContact = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PUT /api/contact
-// Upsert the singleton contact document.
-// Finds the first document and updates it; creates one if none exists.
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Updates or creates the singleton contact document.
+ * Route: PUT /api/contact
+ * Applies upsert logic to ensure exactly one document governs the contact information.
+ *
+ * @param {import('express').Request} req - The Express request object containing the updated fields.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the updated contact document.
+ */
 const updateContact = async (req, res) => {
   try {
     const { phone, facebook, instagram, address, mapEmbedCode } = req.body;
@@ -40,7 +48,7 @@ const updateContact = async (req, res) => {
     if (address !== undefined)      updates.address = address.trim();
     if (mapEmbedCode !== undefined) updates.mapEmbedCode = mapEmbedCode;
 
-    // Upsert: update the first document, or create it if none exists
+    // Perform an upsert: update the singleton document if it exists, otherwise create it.
     const contact = await Contact.findOneAndUpdate(
       {}, // match any document (singleton pattern)
       { $set: updates },

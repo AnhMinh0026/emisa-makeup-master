@@ -37,6 +37,12 @@ import styles from './AdminGallery.module.css';
 const API_BASE = '/api/images';
 const CATEGORIES_API = '/api/categories';
 
+/**
+ * Admin page for managing the global image gallery.
+ * Includes advanced filtering by category and date range, as well as image CRUD operations.
+ *
+ * @returns {JSX.Element} The admin gallery page.
+ */
 export default function AdminGallery() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,12 +52,12 @@ export default function AdminGallery() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   
-  // Filter states
+  // Maintain state for current active filters.
   const [filterCategory, setFilterCategory] = useState(searchParams.get('category') || '');
   const [filterDateRange, setFilterDateRange] = useState([null, null]);
   const [categoryOptions, setCategoryOptions] = useState([]);
 
-  // Fetch categories for the filter dropdown
+  // Retrieve categories from the backend to populate the filter dropdown.
   useEffect(() => {
     axios
       .get(CATEGORIES_API)
@@ -121,7 +127,7 @@ export default function AdminGallery() {
     setFilterCategory('');
     setFilterDateRange([null, null]);
     if (searchParams.get('category')) {
-      navigate('/admin/gallery'); // clear from URL if present
+      navigate('/admin/gallery'); // Remove query parameters from the URL if applicable.
     }
   };
 
@@ -203,7 +209,7 @@ export default function AdminGallery() {
   return (
     <Stack gap="lg">
 
-      {/* ── Page header ── */}
+      {/* --- Page Header --- */}
       <Group justify="space-between" align="flex-start">
         <Box>
           <Title order={3} fw={700} c="dark.8">Gallery Manager</Title>
@@ -221,10 +227,10 @@ export default function AdminGallery() {
         </Button>
       </Group>
 
-      {/* ── Table card with Filter Bar ── */}
+      {/* --- Table Card with Filter Bar --- */}
       <Paper shadow="xs" radius="md" withBorder>
         
-        {/* Filter Bar */}
+        {/* --- Filter Bar --- */}
         <Box p="md" style={{ borderBottom: '1px solid #f1f3f5' }}>
           <Group align="flex-end" gap="sm">
             <Select
@@ -294,7 +300,7 @@ export default function AdminGallery() {
         )}
       </Paper>
 
-      {/* ── Modal ── */}
+      {/* --- Modal --- */}
       <ImageFormModal
         opened={modalOpened}
         onClose={closeModal}

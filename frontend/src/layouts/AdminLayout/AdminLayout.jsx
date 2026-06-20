@@ -20,6 +20,12 @@ const NAV_LINKS = [
   { label: 'Settings', to: '/admin/settings', icon: IconSettings },
 ];
 
+/**
+ * Provides the main layout structure for the admin dashboard.
+ * Includes a responsive sidebar navigation and a main content area.
+ *
+ * @returns {JSX.Element} The admin layout component.
+ */
 export default function AdminLayout() {
   const navigate = useNavigate();
 
@@ -28,16 +34,16 @@ export default function AdminLayout() {
       navbar={{ width: 230, breakpoint: 'sm' }}
       padding={0}
     >
-      {/* ── SIDEBAR ── */}
+      {/* --- Sidebar --- */}
       <AppShell.Navbar className={styles.navbar}>
 
-        {/* Logo */}
+        {/* --- Logo --- */}
         <Box className={styles.logoWrapper}>
           <Text className={styles.logo}>EMISA</Text>
           <Text className={styles.logoSub}>Admin Dashboard</Text>
         </Box>
 
-        {/* Navigation */}
+        {/* --- Navigation --- */}
         <Stack gap={0} className={styles.navStack}>
           <Text className={styles.navSection}>Navigation</Text>
 
@@ -57,7 +63,7 @@ export default function AdminLayout() {
           ))}
         </Stack>
 
-        {/* Back to site */}
+        {/* --- Back to Website --- */}
         <Box className={styles.backWrapper}>
           <UnstyledButton
             className={styles.backLink}
@@ -72,10 +78,10 @@ export default function AdminLayout() {
 
       </AppShell.Navbar>
 
-      {/* ── MAIN CONTENT ── */}
+      {/* --- Main Content --- */}
       <AppShell.Main className={styles.main}>
 
-        {/* Top bar */}
+        {/* --- Top Bar --- */}
         <Box className={styles.topBar}>
           <Group gap={8}>
             <IconLayoutDashboard size={15} stroke={1.5} color="#868e96" />
@@ -83,7 +89,7 @@ export default function AdminLayout() {
           </Group>
         </Box>
 
-        {/* Page outlet */}
+        {/* --- Page Outlet --- */}
         <Box className={styles.content}>
           <Outlet />
         </Box>

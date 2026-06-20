@@ -34,7 +34,17 @@ import styles from './AdminCategories.module.css';
 
 const API_BASE = '/api/categories';
 
-// ─── Category Form Modal ──────────────────────────────────────────────────────
+/* --- Category Form Modal --- */
+/**
+ * Modal component for creating or editing category information.
+ *
+ * @param {Object} props - Component properties.
+ * @param {boolean} props.opened - Controls visibility.
+ * @param {Function} props.onClose - Callback to close the modal.
+ * @param {Object|null} props.category - The category object to edit, or null for creating a new one.
+ * @param {Function} props.onSuccess - Callback invoked on successful form submission.
+ * @returns {JSX.Element} The category form modal.
+ */
 function CategoryFormModal({ opened, onClose, category, onSuccess }) {
   const isEditing = Boolean(category);
 
@@ -132,7 +142,13 @@ function CategoryFormModal({ opened, onClose, category, onSuccess }) {
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+/* --- Main Page --- */
+/**
+ * Admin page for managing image and service categories.
+ * Allows creating, editing, and deleting categories with built-in validation.
+ *
+ * @returns {JSX.Element} The admin categories page component.
+ */
 export default function AdminCategories() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -186,17 +202,17 @@ export default function AdminCategories() {
 
   const rows = categories.map((cat) => (
     <Table.Tr key={cat._id}>
-      {/* Name */}
+      {/* --- Name --- */}
       <Table.Td>
         <Text size="sm" fw={500} c="dark">{cat.name}</Text>
       </Table.Td>
 
-      {/* Slug */}
+      {/* --- Slug --- */}
       <Table.Td>
         <Text size="xs" ff="monospace" className={styles.slugPill}>{cat.slug}</Text>
       </Table.Td>
 
-      {/* Image count */}
+      {/* --- Image Count --- */}
       <Table.Td>
         <Badge
           variant="light"
@@ -207,7 +223,7 @@ export default function AdminCategories() {
         </Badge>
       </Table.Td>
 
-      {/* Date */}
+      {/* --- Date --- */}
       <Table.Td>
         <Text size="xs" c="dimmed">
           {new Date(cat.createdAt).toLocaleDateString('en-GB', {
@@ -216,7 +232,7 @@ export default function AdminCategories() {
         </Text>
       </Table.Td>
 
-      {/* Actions */}
+      {/* --- Actions --- */}
       <Table.Td>
         <Group gap={6} justify="flex-end" wrap="nowrap">
           <Tooltip label="View images" position="top">
@@ -252,7 +268,7 @@ export default function AdminCategories() {
               color="red"
               size={32}
               onClick={() => handleDelete(cat)}
-              disabled={false} /* backend will reject with 400 — surface via notification */
+              disabled={false} /* The backend inherently rejects deletions of categories with associated images; surface this via a notification. */
               aria-label={`Delete ${cat.name}`}
             >
               <IconTrash size={15} stroke={1.7} />
@@ -266,7 +282,7 @@ export default function AdminCategories() {
   return (
     <Stack gap="lg">
 
-      {/* ── Page header ── */}
+      {/* --- Page Header --- */}
       <Group justify="space-between" align="flex-start">
         <Box>
           <Title order={3} fw={700} c="dark.8">Categories</Title>
@@ -284,7 +300,7 @@ export default function AdminCategories() {
         </Button>
       </Group>
 
-      {/* ── Table card ── */}
+      {/* --- Table Card --- */}
       <Paper shadow="xs" radius="md" withBorder>
         {loading ? (
           <Stack align="center" py={64} gap={12}>

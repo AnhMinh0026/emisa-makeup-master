@@ -18,6 +18,12 @@ import styles from './Contact.module.css';
 
 const API_URL = '/api/contact';
 
+/**
+ * Renders the public contact page containing communication channels and an embedded map.
+ * Fetches dynamic contact details from the backend API.
+ *
+ * @returns {JSX.Element} The contact page component.
+ */
 export default function Contact() {
   const [contactData, setContactData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,7 +49,7 @@ export default function Contact() {
   return (
     <Box className={styles.page}>
 
-      {/* ── Header ── */}
+      {/* --- Header --- */}
       <Box className={styles.headerBlock}>
         <Text
           className={styles.headerText}
@@ -55,7 +61,7 @@ export default function Contact() {
         </Text>
       </Box>
 
-      {/* ── Contact List ── */}
+      {/* --- Contact List --- */}
       <Box className={styles.listBlock}>
         <List spacing="sm" className={styles.contactList}>
 
@@ -114,7 +120,7 @@ export default function Contact() {
         </List>
       </Box>
 
-      {/* ── Map Section ── */}
+      {/* --- Map Section --- */}
       {hasMap && (
         <Box className={styles.mapSection}>
           <Text

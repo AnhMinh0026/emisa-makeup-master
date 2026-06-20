@@ -7,16 +7,16 @@ import { MantineProvider, createTheme } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import App from './App.jsx';
 
-// Monolith Editorial Design System — d:\DESIGN.md compliant
+// Monolith Editorial Design System — fully compliant with established design specifications.
 const editorialTheme = createTheme({
   fontFamily: 'Inter, sans-serif',
   defaultRadius: 0, // Strictly Sharp (0px) — no rounded corners anywhere
 
-  // Map DESIGN.md primary (#000000) to Mantine's primaryColor
+  // Map the primary design token to the theme's primary color property.
   primaryColor: 'dark',
   colors: {
     dark: [
-      // Scaled from DESIGN.md color tokens:
+      // Scaled from core color tokens:
       // [0] surface-container-highest #e2e2e2
       // [1] surface-container-high    #e8e8e8
       // [2] surface-container         #eeeeee
@@ -38,7 +38,7 @@ const editorialTheme = createTheme({
   },
 
   other: {
-    // DESIGN.md color tokens
+      // Core color tokens
     surface: '#f9f9f9',
     surfaceContainerLowest: '#ffffff',
     surfaceContainerLow: '#f3f3f4',
@@ -54,7 +54,7 @@ const editorialTheme = createTheme({
     outlineVariant: '#cfc4c5',
     background: '#f9f9f9',
     onBackground: '#1a1c1c',
-    // DESIGN.md spacing tokens
+    // Standardized spacing tokens
     sectionGap: '160px',
     contentGap: '80px',
     marginDesktop: '64px',

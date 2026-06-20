@@ -11,21 +11,21 @@ const serviceRoutes = require('./routes/serviceRoutes');
 
 const app = express();
 
-// Middlewares
+/* --- Middlewares --- */
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
+/* --- Database Connection --- */
 connectDB();
 
-// Routes
+/* --- Routes --- */
 app.get('/', (req, res) => res.send('API is running...'));
 app.use('/api/images', imageRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/services', serviceRoutes);
 
-// Start server
+/* --- Server Initialization --- */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

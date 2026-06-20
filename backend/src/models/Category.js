@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+/* --- Category Schema --- */
+/**
+ * Mongoose schema representing an image or service category.
+ */
 const categorySchema = new mongoose.Schema(
   {
     name: {

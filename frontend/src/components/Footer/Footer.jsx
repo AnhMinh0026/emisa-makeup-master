@@ -7,16 +7,21 @@ const FOOTER_LINKS = [
   { label: 'CREDITS', path: '/credits' },
 ];
 
+/**
+ * Renders the global footer containing brand information, policy links, and copyright.
+ *
+ * @returns {JSX.Element} The footer component.
+ */
 export default function Footer() {
   return (
     <footer className={styles.footer}>
 
-      {/* ── LEFT: Brand ── */}
+      {/* --- Left: Brand --- */}
       <Link to="/" className={styles.brand}>
         EMISA
       </Link>
 
-      {/* ── CENTER: Policy links ── */}
+      {/* --- Center: Policy Links --- */}
       <nav className={styles.links}>
         {FOOTER_LINKS.map((link) => (
           <Link key={link.label} to={link.path} className={styles.link}>
@@ -25,7 +30,7 @@ export default function Footer() {
         ))}
       </nav>
 
-      {/* ── RIGHT: Copyright ── */}
+      {/* --- Right: Copyright --- */}
       <span className={styles.copyright}>
         © 2024 ACHROMATIC EDITORIAL. ALL RIGHTS RESERVED.
       </span>

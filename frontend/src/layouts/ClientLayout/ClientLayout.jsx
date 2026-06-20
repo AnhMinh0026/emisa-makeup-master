@@ -4,25 +4,31 @@ import Footer from '../../components/Footer/Footer.jsx';
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop.jsx';
 import styles from './ClientLayout.module.css';
 
+/**
+ * Acts as the primary layout wrapper for public-facing pages.
+ * Incorporates the global header, footer, scroll-to-top utility, and page content.
+ *
+ * @returns {JSX.Element} The client layout component.
+ */
 export default function ClientLayout() {
   return (
     <div className={styles.wrapper}>
 
-      {/* ── HEADER ── */}
+      {/* --- Header --- */}
       <Header />
 
-      {/* ── 1px black ruling line divider ── */}
+      {/* --- Divider --- */}
       <hr className={styles.divider} />
 
-      {/* ── PAGE CONTENT ── */}
+      {/* --- Page Content --- */}
       <main className={styles.main}>
         <Outlet />
       </main>
 
-      {/* ── FOOTER ── */}
+      {/* --- Footer --- */}
       <Footer />
 
-      {/* ── SCROLL TO TOP ── */}
+      {/* --- Scroll To Top --- */}
       <ScrollToTop />
 
     </div>

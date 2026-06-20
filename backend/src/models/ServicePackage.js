@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
-// ─── ServicePackage Schema ─────────────────────────────────────────────────────
+/* --- ServicePackage Schema --- */
+/**
+ * Mongoose schema representing a service package or course offering.
+ */
 const servicePackageSchema = new mongoose.Schema(
   {
     name: {

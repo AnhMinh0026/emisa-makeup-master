@@ -6,10 +6,12 @@ import axios from 'axios';
 import styles from './PricingList.module.css';
 
 /**
- * PricingList — Public-facing pricing cards.
- * Achromatic Editorial: 0px radius, pure black/white, 1px solid #000 borders.
+ * Renders a list of pricing services based on the provided category.
+ * Employs an achromatic editorial design with sharp corners and stark contrast.
  *
- * @param {string} category - 'makeup' | 'course'
+ * @param {Object} props - The component properties.
+ * @param {string} props.category - The category of services to fetch ('makeup' | 'course').
+ * @returns {JSX.Element|null} The pricing list component, or null if no services exist.
  */
 export default function PricingList({ category }) {
   const [services, setServices] = useState([]);
@@ -36,7 +38,7 @@ export default function PricingList({ category }) {
 
   return (
     <Box className={styles.wrapper}>
-      {/* Section header */}
+      {/* --- Section Header --- */}
       <Group justify="space-between" align="flex-end" className={styles.sectionHeader}>
         <h2 className={styles.sectionLabel}>BẢNG GIÁ DỊCH VỤ</h2>
         <Button
@@ -52,16 +54,14 @@ export default function PricingList({ category }) {
         </Button>
       </Group>
 
-      {/* Package list */}
+      {/* --- Package List --- */}
       <Stack gap={0} className={styles.list}>
         {services.map((svc, i) => (
           <Box key={svc._id} className={styles.item}>
-            {/* Row number */}
             <Text className={styles.itemIndex}>
               {String(i + 1).padStart(2, '0')}
             </Text>
 
-            {/* Name + description */}
             <Box className={styles.itemBody}>
               <Text className={styles.itemName}>{svc.name}</Text>
               {svc.description && (
@@ -69,7 +69,6 @@ export default function PricingList({ category }) {
               )}
             </Box>
 
-            {/* Price */}
             <Text className={styles.itemPrice}>{svc.price}</Text>
           </Box>
         ))}

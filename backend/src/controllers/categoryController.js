@@ -1,19 +1,29 @@
 const Category = require('../models/Category');
 const Image = require('../models/Image');
 
-// ─── Helper: generate a URL-safe slug from a name string ─────────────────────
+/* --- Helper: URL Slug Generation --- */
+/**
+ * Generates a URL-safe slug from a given string.
+ *
+ * @param {string} name - The original string.
+ * @returns {string} The formatted URL-safe slug.
+ */
 const generateSlug = (name) =>
   name
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9\s-]/g, '')   // strip non-alphanumeric (except spaces/hyphens)
-    .replace(/\s+/g, '-')            // replace spaces with hyphens
-    .replace(/-+/g, '-');            // collapse multiple hyphens
+    .replace(/[^a-z0-9\s-]/g, '')   // Remove non-alphanumeric characters, preserving spaces and hyphens.
+    .replace(/\s+/g, '-')            // Replace spaces with hyphens.
+    .replace(/-+/g, '-');            // Collapse multiple consecutive hyphens into a single hyphen.
 
-// ─────────────────────────────────────────────────────────────────────────────
-// POST /api/categories
-// Body: { name, slug? }
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Creates a new category.
+ * Route: POST /api/categories
+ *
+ * @param {import('express').Request} req - The Express request object containing name and optional slug.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the newly created category.
+ */
 const createCategory = async (req, res) => {
   try {
     const { name, slug } = req.body;
@@ -24,7 +34,7 @@ const createCategory = async (req, res) => {
 
     const resolvedSlug = slug ? slug.toLowerCase().trim() : generateSlug(name);
 
-    // Guard against duplicate slugs
+    // Prevent creation of duplicate slugs.
     const existing = await Category.findOne({ slug: resolvedSlug });
     if (existing) {
       return res.status(409).json({
@@ -40,15 +50,20 @@ const createCategory = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// GET /api/categories
-// Returns all categories, each enriched with an `imageCount` field.
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Retrieves all categories.
+ * Route: GET /api/categories
+ * Each category is enriched with an `imageCount` representing the number of associated images.
+ *
+ * @param {import('express').Request} req - The Express request object.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the list of enriched categories.
+ */
 const getCategories = async (req, res) => {
   try {
     const categories = await Category.find().sort({ name: 1 });
 
-    // Attach imageCount to each category in parallel
+    // Concurrently fetch the image count associated with each category.
     const enriched = await Promise.all(
       categories.map(async (cat) => {
         const imageCount = await Image.countDocuments({ category: cat.slug });
@@ -63,10 +78,14 @@ const getCategories = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PUT /api/categories/:id
-// Body: { name?, slug? }
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Updates an existing category by ID.
+ * Route: PUT /api/categories/:id
+ *
+ * @param {import('express').Request} req - The Express request object containing the category ID and fields to update.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the updated category.
+ */
 const updateCategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
@@ -80,7 +99,7 @@ const updateCategory = async (req, res) => {
     if (name !== undefined) updates.name = name.trim();
     if (slug !== undefined) updates.slug = slug.toLowerCase().trim();
 
-    // If slug is changing, check for conflicts
+    // Verify slug uniqueness when updating to a new slug.
     if (updates.slug && updates.slug !== category.slug) {
       const conflict = await Category.findOne({ slug: updates.slug });
       if (conflict) {
@@ -103,10 +122,15 @@ const updateCategory = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DELETE /api/categories/:id
-// Blocked if any images are still using this category's slug.
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Deletes a category by ID.
+ * Route: DELETE /api/categories/:id
+ * The deletion is blocked if any images are still associated with the category.
+ *
+ * @param {import('express').Request} req - The Express request object containing the category ID.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response confirming the deletion.
+ */
 const deleteCategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
@@ -114,7 +138,7 @@ const deleteCategory = async (req, res) => {
       return res.status(404).json({ message: 'Category not found.' });
     }
 
-    // STRICT VALIDATION: refuse deletion if images exist in this category
+    // Enforce strict validation: prevent deletion if the category is still associated with any images.
     const count = await Image.countDocuments({ category: category.slug });
     if (count > 0) {
       return res.status(400).json({

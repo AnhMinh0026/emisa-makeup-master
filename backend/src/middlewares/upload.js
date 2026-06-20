@@ -15,6 +15,10 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+/**
+ * Multer middleware configuration for handling multipart/form-data.
+ * Enforces memory storage, a 20 MB file size limit, and specific MIME type filtering.
+ */
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {

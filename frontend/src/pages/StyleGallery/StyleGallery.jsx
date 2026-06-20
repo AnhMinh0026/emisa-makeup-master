@@ -4,6 +4,12 @@ import axios from 'axios';
 import GalleryGrid from '../../components/Gallery/GalleryGrid.jsx';
 import styles from './StyleGallery.module.css';
 
+/**
+ * Renders a categorized image gallery based on the URL parameter.
+ * Fetches images specific to the category and retrieves category metadata for the page title.
+ *
+ * @returns {JSX.Element} The style gallery page component.
+ */
 export default function StyleGallery() {
   const { categorySlug } = useParams();
 
@@ -18,7 +24,7 @@ export default function StyleGallery() {
     setLoading(true);
     setError(null);
 
-    // Fire both requests in parallel
+    // Execute API requests concurrently to optimize load time.
     Promise.all([
       axios.get(`/api/images?category=${categorySlug}`),
       axios.get('/api/categories'),
@@ -26,11 +32,11 @@ export default function StyleGallery() {
       .then(([imagesRes, categoriesRes]) => {
         setImages(imagesRes.data.images || []);
 
-        // Find the matching category to get its display name
+        // Locate the matching category object to retrieve its human-readable display name.
         const match = (categoriesRes.data.categories || []).find(
           (c) => c.slug === categorySlug
         );
-        // Graceful fallback: capitalise the slug if category not found in DB
+        // Provide a graceful fallback by capitalizing the slug when the category is absent from the database.
         setCategoryName(
           match?.name ??
           categorySlug
@@ -44,7 +50,7 @@ export default function StyleGallery() {
       .finally(() => setLoading(false));
   }, [categorySlug]);
 
-  /* ── Loading ── */
+  /* --- Loading State --- */
   if (loading) {
     return (
       <div className={styles.page}>
@@ -55,7 +61,7 @@ export default function StyleGallery() {
     );
   }
 
-  /* ── Error ── */
+  /* --- Error State --- */
   if (error) {
     return (
       <div className={styles.page}>
@@ -69,10 +75,10 @@ export default function StyleGallery() {
 
   return (
     <div className={styles.page}>
-      {/* ── Page title — Achromatic Editorial headline-lg ── */}
+      {/* --- Page Title --- */}
       <h1 className={styles.categoryTitle}>{categoryName}</h1>
 
-      {/* ── Gallery grid or empty state ── */}
+      {/* --- Gallery Grid / Empty State --- */}
       {images.length > 0 ? (
         <GalleryGrid images={images} />
       ) : (

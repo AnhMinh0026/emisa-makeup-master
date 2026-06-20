@@ -34,6 +34,12 @@ import axios from 'axios';
 
 const API_URL = '/api/services';
 
+/**
+ * Admin page for managing pricing packages and services.
+ * Features CRUD operations and toggle visibility for individual packages.
+ *
+ * @returns {JSX.Element} The admin services page.
+ */
 export default function AdminServices() {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,7 +61,7 @@ export default function AdminServices() {
     },
   });
 
-  // ── Fetch all services (admin mode) ──────────────────────────────────────
+  /* --- Fetch All Services (Admin Mode) --- */
   const fetchServices = useCallback(async () => {
     setLoading(true);
     try {
@@ -75,14 +81,14 @@ export default function AdminServices() {
 
   useEffect(() => { fetchServices(); }, [fetchServices]);
 
-  // ── Open modal for Add ────────────────────────────────────────────────────
+  /* --- Open Modal for Add --- */
   const handleAdd = () => {
     setSelectedService(null);
     form.reset();
     openModal();
   };
 
-  // ── Open modal for Edit ───────────────────────────────────────────────────
+  /* --- Open Modal for Edit --- */
   const handleEdit = (svc) => {
     setSelectedService(svc);
     form.setValues({
@@ -95,7 +101,7 @@ export default function AdminServices() {
     openModal();
   };
 
-  // ── Submit (Create or Update) ─────────────────────────────────────────────
+  /* --- Submit (Create or Update) --- */
   const handleSubmit = async (values) => {
     setSaving(true);
     try {
@@ -130,7 +136,7 @@ export default function AdminServices() {
     }
   };
 
-  // ── Toggle isHidden inline ────────────────────────────────────────────────
+  /* --- Toggle Visibility Inline --- */
   const handleToggleHidden = async (svc) => {
     try {
       await axios.put(`${API_URL}/${svc._id}`, { isHidden: !svc.isHidden });
@@ -151,7 +157,7 @@ export default function AdminServices() {
     }
   };
 
-  // ── Delete ────────────────────────────────────────────────────────────────
+  /* --- Delete --- */
   const handleDelete = async (svc) => {
     if (!window.confirm(`Xóa gói "${svc.name}"? Hành động này không thể hoàn tác.`)) return;
     try {
@@ -173,7 +179,7 @@ export default function AdminServices() {
     }
   };
 
-  // ── Table rows ────────────────────────────────────────────────────────────
+  /* --- Table Rows --- */
   const rows = services.map((svc) => (
     <Table.Tr key={svc._id} style={{ opacity: svc.isHidden ? 0.55 : 1 }}>
       <Table.Td>
@@ -237,7 +243,7 @@ export default function AdminServices() {
   return (
     <Stack gap="lg">
 
-      {/* ── Page header ── */}
+      {/* --- Page Header --- */}
       <Group justify="space-between" align="flex-start">
         <Box>
           <Title order={3} fw={700} c="dark.8">Pricing Packages</Title>
@@ -255,7 +261,7 @@ export default function AdminServices() {
         </Button>
       </Group>
 
-      {/* ── Table card ── */}
+      {/* --- Table Card --- */}
       <Paper shadow="xs" radius="md" withBorder>
         {loading ? (
           <Stack align="center" py={64} gap={12}>
@@ -284,7 +290,7 @@ export default function AdminServices() {
         )}
       </Paper>
 
-      {/* ── Add / Edit Modal ── */}
+      {/* --- Add / Edit Modal --- */}
       <Modal
         opened={modalOpened}
         onClose={closeModal}

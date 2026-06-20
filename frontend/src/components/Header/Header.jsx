@@ -12,29 +12,35 @@ const NAV_LINKS = [
   { label: 'CONTACT', path: '/contact' },
 ];
 
+/**
+ * Renders the global site header featuring navigation links, category dropdowns, and social icons.
+ * Fetches style gallery categories dynamically from the backend API.
+ *
+ * @returns {JSX.Element} The header component.
+ */
 export default function Header() {
   const location = useLocation();
   const [categories, setCategories] = useState([]);
 
-  // Fetch live categories for the dropdown — silently ignore errors
+  // Retrieve dynamic categories for the dropdown menu; fail silently to preserve UI integrity.
   useEffect(() => {
     axios
       .get('/api/categories')
       .then(({ data }) => setCategories(data.categories || []))
-      .catch(() => {}); // fail silently — dropdown just stays empty
+      .catch(() => {});
   }, []);
 
   return (
     <header className={styles.header}>
-      {/* ── Stack: logo centred, then nav row ── */}
+      {/* --- Stack: Centered Logo & Nav Row --- */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
-        {/* LOGO */}
+        {/* --- Logo --- */}
         <Link to="/" className={styles.logo} aria-label="EMISA Home">
           EMISA
         </Link>
 
-        {/* NAV BAR */}
+        {/* --- Navigation Bar --- */}
         <nav className={styles.navBar}>
           <div className={styles.navGroup}>
             {NAV_LINKS.map((link) => {
@@ -63,7 +69,7 @@ export default function Header() {
 
                     <Menu.Dropdown>
                       {categories.length === 0 ? (
-                        /* Graceful empty state inside dropdown */
+                        /* Display a graceful fallback state when no categories exist. */
                         <Menu.Item disabled classNames={{ item: styles.menuItemEmpty }}>
                           No galleries yet
                         </Menu.Item>
@@ -138,7 +144,7 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* ── ICON ROW — below nav links ── */}
+        {/* --- Icon Row --- */}
         <div className={styles.iconRow}>
           <a
             href="https://instagram.com"

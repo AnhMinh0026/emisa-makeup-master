@@ -1,9 +1,13 @@
 const ServicePackage = require('../models/ServicePackage');
 
-// ─────────────────────────────────────────────────────────────────────────────
-// POST /api/services
-// Body: { name, price, description, category, isHidden? }
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Creates a new service package.
+ * Route: POST /api/services
+ *
+ * @param {import('express').Request} req - The Express request object containing the service fields.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the newly created service package.
+ */
 const createService = async (req, res) => {
   try {
     const { name, price, description, category, isHidden, order } = req.body;
@@ -28,12 +32,14 @@ const createService = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// GET /api/services
-// Query params:
-//   category=makeup|course  — filter by category
-//   admin=true              — return all (including hidden); else filter hidden out
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Retrieves service packages with optional category and visibility filtering.
+ * Route: GET /api/services
+ *
+ * @param {import('express').Request} req - The Express request object.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the list of service packages.
+ */
 const getServices = async (req, res) => {
   try {
     const { category, admin } = req.query;
@@ -41,7 +47,7 @@ const getServices = async (req, res) => {
 
     const filter = {};
     if (category) filter.category = category;
-    if (!isAdmin) filter.isHidden = false; // public: skip hidden packages
+    if (!isAdmin) filter.isHidden = false; // Exclude hidden service packages for public API consumers.
 
     const services = await ServicePackage.find(filter).sort({ order: 1, createdAt: 1 });
 
@@ -52,10 +58,14 @@ const getServices = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PUT /api/services/:id
-// Body: any subset of { name, price, description, category, isHidden, order }
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Updates an existing service package.
+ * Route: PUT /api/services/:id
+ *
+ * @param {import('express').Request} req - The Express request object.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response containing the updated service package.
+ */
 const updateService = async (req, res) => {
   try {
     const service = await ServicePackage.findById(req.params.id);
@@ -86,9 +96,14 @@ const updateService = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DELETE /api/services/:id
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * Deletes a service package.
+ * Route: DELETE /api/services/:id
+ *
+ * @param {import('express').Request} req - The Express request object containing the service package ID.
+ * @param {import('express').Response} res - The Express response object.
+ * @returns {Promise<Object>} JSON response confirming the deletion.
+ */
 const deleteService = async (req, res) => {
   try {
     const service = await ServicePackage.findByIdAndDelete(req.params.id);

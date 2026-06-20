@@ -1,6 +1,12 @@
 import { Container } from '@mantine/core';
 import styles from './CoursePricing.module.css';
 
+/**
+ * Renders the pricing page for makeup training courses.
+ * Currently serves as a placeholder for future content.
+ *
+ * @returns {JSX.Element} The course pricing page component.
+ */
 export default function CoursePricing() {
   return (
     <Container size="md" className={styles.page}>

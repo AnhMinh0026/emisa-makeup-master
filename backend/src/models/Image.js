@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+/* --- Image Schema --- */
+/**
+ * Mongoose schema representing an uploaded image.
+ * Stores metadata and Cloudinary reference data.
+ */
 const imageSchema = new mongoose.Schema(
   {
     title: {

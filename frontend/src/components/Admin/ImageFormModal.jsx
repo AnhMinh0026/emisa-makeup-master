@@ -21,13 +21,24 @@ import axios from 'axios';
 const API_BASE = '/api/images';
 const CATEGORIES_API = '/api/categories';
 
+/**
+ * Modal component for creating or editing an image entry in the admin gallery.
+ * Handles form validation, file uploads, and metadata updates via the backend API.
+ *
+ * @param {Object} props - The component properties.
+ * @param {boolean} props.opened - Controls the visibility of the modal.
+ * @param {Function} props.onClose - Callback invoked to close the modal.
+ * @param {Object|null} props.image - The image object to edit, or null for creating a new entry.
+ * @param {Function} props.onSuccess - Callback invoked upon successful submission.
+ * @returns {JSX.Element} The image form modal component.
+ */
 export default function ImageFormModal({ opened, onClose, image, onSuccess }) {
   const isEditing = Boolean(image);
 
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [loadingCats, setLoadingCats] = useState(false);
 
-  // Fetch live categories when modal opens
+  // Retrieve dynamic categories upon modal initialization.
   useEffect(() => {
     if (!opened) return;
     setLoadingCats(true);
@@ -125,7 +136,7 @@ export default function ImageFormModal({ opened, onClose, image, onSuccess }) {
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack gap="md">
 
-          {/* Image upload */}
+          {/* --- Image Upload --- */}
           <Stack gap={4}>
             <FileInput
               label={isEditing ? 'Replace Image' : 'Image File'}
@@ -141,14 +152,14 @@ export default function ImageFormModal({ opened, onClose, image, onSuccess }) {
 
           <Divider />
 
-          {/* Title */}
+          {/* --- Title Input --- */}
           <TextInput
             label="Title"
             placeholder="Untitled"
             {...form.getInputProps('title')}
           />
 
-          {/* Category */}
+          {/* --- Category Selection --- */}
           {loadingCats ? (
             <Group gap={8}>
               <Loader size="xs" />
@@ -170,7 +181,7 @@ export default function ImageFormModal({ opened, onClose, image, onSuccess }) {
 
           <Divider />
 
-          {/* Toggles */}
+          {/* --- Feature & Visibility Toggles --- */}
           <Group justify="space-between">
             <Stack gap={2}>
               <Text size="sm" fw={500}>Featured</Text>
@@ -197,7 +208,7 @@ export default function ImageFormModal({ opened, onClose, image, onSuccess }) {
 
           <Divider />
 
-          {/* Action buttons */}
+          {/* --- Action Buttons --- */}
           <Group justify="flex-end" gap="sm">
             <Button variant="default" radius="md" onClick={onClose}>Cancel</Button>
             <Button type="submit" radius="md" color="blue">

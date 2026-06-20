@@ -5,20 +5,17 @@ import 'yet-another-react-lightbox/styles.css';
 import styles from './GalleryGrid.module.css';
 
 /**
- * GalleryGrid — Uniform CSS Grid with lightbox.
+ * Displays a responsive grid of images with an interactive lightbox for zoomed viewing.
+ * Supports dual data shapes to maintain backward compatibility with legacy local assets.
  *
- * Accepts the MongoDB/Cloudinary data shape:
- *   { _id, imageUrl, title, category, isFeatured, isHidden }
- *
- * Also accepts legacy local shape for backward compat:
- *   { id, src, alt }
- *
- * @param {Array} images
+ * @param {Object} props - The component properties.
+ * @param {Array<Object>} props.images - The list of image objects to display.
+ * @returns {JSX.Element} The rendered gallery grid.
  */
 export default function GalleryGrid({ images = [] }) {
   const [index, setIndex] = useState(-1);
 
-  // Normalise both data shapes so the grid & lightbox work with either
+  // Normalise dual data structures (Cloudinary vs local assets) to ensure unified rendering.
   const normalised = images.map((img) => ({
     key: img._id   ?? img.id,
     src: img.imageUrl ?? img.src,

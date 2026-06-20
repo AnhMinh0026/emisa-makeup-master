@@ -22,6 +22,12 @@ import axios from 'axios';
 
 const API_URL = '/api/contact';
 
+/**
+ * Admin page for managing public contact information.
+ * Allows updating phone, social links, address, and Google Maps embed code.
+ *
+ * @returns {JSX.Element} The admin contact settings page.
+ */
 export default function AdminContact() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -36,7 +42,7 @@ export default function AdminContact() {
     },
   });
 
-  // ── Fetch current contact data on mount ──────────────────────────────────
+  /* --- Fetch Current Contact Data on Mount --- */
   useEffect(() => {
     axios
       .get(API_URL)
@@ -61,7 +67,7 @@ export default function AdminContact() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ── Submit handler ────────────────────────────────────────────────────────
+  /* --- Submit Handler --- */
   const handleSubmit = async (values) => {
     setSaving(true);
     try {
@@ -87,7 +93,7 @@ export default function AdminContact() {
   return (
     <Stack gap="lg">
 
-      {/* ── Page header ── */}
+      {/* --- Page Header --- */}
       <Group justify="space-between" align="flex-start">
         <Box>
           <Title order={3} fw={700} c="dark.8">Contact Settings</Title>
@@ -97,7 +103,7 @@ export default function AdminContact() {
         </Box>
       </Group>
 
-      {/* ── Form card ── */}
+      {/* --- Form Card --- */}
       <Paper shadow="xs" radius="md" withBorder p="xl">
 
         {loading ? (
@@ -109,7 +115,7 @@ export default function AdminContact() {
           <form onSubmit={form.onSubmit(handleSubmit)}>
             <Stack gap="md">
 
-              {/* Section label */}
+              {/* --- Section Label --- */}
               <Group gap={8} align="center">
                 <IconAddressBook size={16} stroke={1.8} color="#868e96" />
                 <Text size="sm" fw={600} c="dark.5" tt="uppercase" style={{ letterSpacing: '0.05em' }}>
@@ -117,7 +123,7 @@ export default function AdminContact() {
                 </Text>
               </Group>
 
-              {/* Phone / Zalo */}
+              {/* --- Phone / Zalo --- */}
               <TextInput
                 id="contact-phone"
                 label="Phone / Zalo"
@@ -126,7 +132,7 @@ export default function AdminContact() {
                 {...form.getInputProps('phone')}
               />
 
-              {/* Facebook */}
+              {/* --- Facebook --- */}
               <TextInput
                 id="contact-facebook"
                 label="Facebook Link"
@@ -135,7 +141,7 @@ export default function AdminContact() {
                 {...form.getInputProps('facebook')}
               />
 
-              {/* Instagram */}
+              {/* --- Instagram --- */}
               <TextInput
                 id="contact-instagram"
                 label="Instagram Link"
@@ -144,7 +150,7 @@ export default function AdminContact() {
                 {...form.getInputProps('instagram')}
               />
 
-              {/* Address */}
+              {/* --- Address --- */}
               <TextInput
                 id="contact-address"
                 label="Address"
@@ -153,7 +159,7 @@ export default function AdminContact() {
                 {...form.getInputProps('address')}
               />
 
-              {/* Divider label */}
+              {/* --- Divider Label --- */}
               <Box pt={4}>
                 <Text size="sm" fw={600} c="dark.5" tt="uppercase" style={{ letterSpacing: '0.05em' }}>
                   Google Maps Embed Code
@@ -163,7 +169,7 @@ export default function AdminContact() {
                 </Text>
               </Box>
 
-              {/* Map Embed Code */}
+              {/* --- Map Embed Code --- */}
               <Textarea
                 id="contact-map-embed"
                 placeholder='<iframe src="https://www.google.com/maps/embed?..." ...></iframe>'
@@ -175,7 +181,7 @@ export default function AdminContact() {
                 {...form.getInputProps('mapEmbedCode')}
               />
 
-              {/* Save button */}
+              {/* --- Save Button --- */}
               <Group justify="flex-end" pt={8}>
                 <Button
                   type="submit"

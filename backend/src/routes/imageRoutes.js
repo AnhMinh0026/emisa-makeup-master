@@ -9,16 +9,24 @@ const {
   deleteImage,
 } = require('../controllers/imageController');
 
-// POST   /api/images        — Upload a new image
+/* --- POST /api/images ---
+ * Uploads a new image.
+ */
 router.post('/', upload.single('image'), uploadImage);
 
-// GET    /api/images        — Fetch images (with optional query filters)
+/* --- GET /api/images ---
+ * Fetches images, supporting optional query filters.
+ */
 router.get('/', getImages);
 
-// PUT    /api/images/:id    — Update image metadata (+ optional file replacement)
+/* --- PUT /api/images/:id ---
+ * Updates image metadata, optionally handling file replacement.
+ */
 router.put('/:id', upload.single('image'), updateImage);
 
-// DELETE /api/images/:id   — Delete image from Cloudinary and DB
+/* --- DELETE /api/images/:id ---
+ * Deletes an image from external storage and the database.
+ */
 router.delete('/:id', deleteImage);
 
 module.exports = router;

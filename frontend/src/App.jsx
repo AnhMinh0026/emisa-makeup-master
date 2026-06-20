@@ -11,11 +11,16 @@ import MakeupPricing from './pages/Pricing/MakeupPricing.jsx';
 import CoursePricing from './pages/Pricing/CoursePricing.jsx';
 import Contact from './pages/Contact/Contact.jsx';
 
+/**
+ * The root application component configuring client and admin routing.
+ *
+ * @returns {JSX.Element} The main application router.
+ */
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* ── Client-facing routes ── */}
+        {/* --- Client-Facing Routes --- */}
         <Route element={<ClientLayout />}>
           <Route index element={<Home />} />
           <Route path="/" element={<Home />} />
@@ -25,7 +30,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
         </Route>
 
-        {/* ── Admin routes ── */}
+        {/* --- Admin Routes --- */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminGallery />} />
           <Route path="gallery" element={<AdminGallery />} />

@@ -8,16 +8,24 @@ const {
   deleteCategory,
 } = require('../controllers/categoryController');
 
-// POST   /api/categories       — Create a new category
+/* --- POST /api/categories ---
+ * Creates a new category.
+ */
 router.post('/', createCategory);
 
-// GET    /api/categories       — Fetch all categories (with imageCount)
+/* --- GET /api/categories ---
+ * Fetches all categories, including associated image counts.
+ */
 router.get('/', getCategories);
 
-// PUT    /api/categories/:id   — Update category name / slug
+/* --- PUT /api/categories/:id ---
+ * Updates a category's name and/or slug.
+ */
 router.put('/:id', updateCategory);
 
-// DELETE /api/categories/:id   — Delete category (blocked if images exist)
+/* --- DELETE /api/categories/:id ---
+ * Deletes a category. Blocked if associated images exist.
+ */
 router.delete('/:id', deleteCategory);
 
 module.exports = router;
