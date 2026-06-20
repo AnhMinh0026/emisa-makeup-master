@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Group, Pagination } from '@mantine/core';
 import axios from 'axios';
 import GalleryGrid from '../../components/Gallery/GalleryGrid.jsx';
 import styles from './Home.module.css';
@@ -11,16 +12,22 @@ import styles from './Home.module.css';
  */
 export default function Home() {
   const [images, setImages] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     axios
-      .get('/api/images?isFeatured=true')
-      .then(({ data }) => setImages(data.images || []))
+      .get(`/api/images?isFeatured=true&page=${page}&limit=16`)
+      .then(({ data }) => {
+        setImages(data.images || []);
+        setTotalPages(data.pagination?.totalPages || 1);
+      })
       .catch((err) => setError(err?.response?.data?.message || 'Failed to load images.'))
       .finally(() => setLoading(false));
-  }, []);
+  }, [page]);
 
   if (loading) {
     return (
@@ -50,5 +57,20 @@ export default function Home() {
     );
   }
 
-  return <GalleryGrid images={images} />;
+  return (
+    <div className={styles.page}>
+      <GalleryGrid images={images} />
+      {totalPages > 1 && (
+        <Group justify="center" mt="xl" pb="xl">
+          <Pagination 
+            total={totalPages} 
+            value={page} 
+            onChange={setPage} 
+            color="dark" 
+            radius="0" 
+          />
+        </Group>
+      )}
+    </div>
+  );
 }

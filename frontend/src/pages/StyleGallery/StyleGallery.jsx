@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Group, Pagination } from '@mantine/core';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import GalleryGrid from '../../components/Gallery/GalleryGrid.jsx';
@@ -14,6 +15,8 @@ export default function StyleGallery() {
   const { categorySlug } = useParams();
 
   const [images, setImages]         = useState([]);
+  const [page, setPage]             = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [categoryName, setCategoryName] = useState('');
   const [loading, setLoading]       = useState(true);
   const [error, setError]           = useState(null);
@@ -26,11 +29,12 @@ export default function StyleGallery() {
 
     // Execute API requests concurrently to optimize load time.
     Promise.all([
-      axios.get(`/api/images?category=${categorySlug}`),
+      axios.get(`/api/images?category=${categorySlug}&page=${page}&limit=16`),
       axios.get('/api/categories'),
     ])
       .then(([imagesRes, categoriesRes]) => {
         setImages(imagesRes.data.images || []);
+        setTotalPages(imagesRes.data.pagination?.totalPages || 1);
 
         // Locate the matching category object to retrieve its human-readable display name.
         const match = (categoriesRes.data.categories || []).find(
@@ -48,6 +52,11 @@ export default function StyleGallery() {
         setError(err?.response?.data?.message || 'Failed to load gallery.');
       })
       .finally(() => setLoading(false));
+  }, [categorySlug, page]);
+
+  useEffect(() => {
+    // Reset page when category changes
+    setPage(1);
   }, [categorySlug]);
 
   /* --- Loading State --- */
@@ -80,7 +89,20 @@ export default function StyleGallery() {
 
       {/* --- Gallery Grid / Empty State --- */}
       {images.length > 0 ? (
-        <GalleryGrid images={images} />
+        <>
+          <GalleryGrid images={images} />
+          {totalPages > 1 && (
+            <Group justify="center" mt="xl" pb="xl">
+              <Pagination 
+                total={totalPages} 
+                value={page} 
+                onChange={setPage} 
+                color="dark" 
+                radius="0" 
+              />
+            </Group>
+          )}
+        </>
       ) : (
         <div className={styles.emptyState}>
           <p className={styles.emptyTitle}>NO IMAGES FOUND</p>

@@ -13,7 +13,6 @@ import styles from './MakeupPricing.module.css';
 export default function MakeupPricing() {
   return (
     <Container size="xl" className={styles.page}>
-    <Container size="xl" className={styles.page}>
       {/* --- Hero Section --- */}
       <div className={styles.grid}>
 

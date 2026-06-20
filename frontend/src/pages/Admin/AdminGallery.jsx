@@ -14,6 +14,7 @@ import {
   Paper,
   Title,
   Select,
+  Pagination,
 } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
@@ -45,6 +46,8 @@ const CATEGORIES_API = '/api/categories';
  */
 export default function AdminGallery() {
   const [images, setImages] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [modalOpened, { open: openModal, close: closeModal }] = useDisclosure(false);
@@ -72,7 +75,7 @@ export default function AdminGallery() {
   const fetchImages = useCallback(async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams({ admin: 'true' });
+      const params = new URLSearchParams({ admin: 'true', page, limit: 12 });
       
       if (filterCategory) {
         params.set('category', filterCategory);
@@ -85,6 +88,7 @@ export default function AdminGallery() {
       
       const { data } = await axios.get(`${API_BASE}?${params.toString()}`);
       setImages(data.images || []);
+      setTotalPages(data.pagination?.totalPages || 1);
     } catch (err) {
       notifications.show({
         title: 'Fetch Error',
@@ -95,6 +99,11 @@ export default function AdminGallery() {
     } finally {
       setLoading(false);
     }
+  }, [filterCategory, filterDateRange, page]);
+
+  useEffect(() => {
+    // Reset to page 1 when filters change
+    setPage(1);
   }, [filterCategory, filterDateRange]);
 
   useEffect(() => { fetchImages(); }, [fetchImages]);
@@ -284,19 +293,33 @@ export default function AdminGallery() {
             </Text>
           </Stack>
         ) : (
-          <Table verticalSpacing="sm" horizontalSpacing="md" highlightOnHover>
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th className={styles.th} w={68}>—</Table.Th>
-                <Table.Th className={styles.th}>Title</Table.Th>
-                <Table.Th className={styles.th}>Category</Table.Th>
-                <Table.Th className={styles.th}>Status</Table.Th>
-                <Table.Th className={styles.th}>Uploaded</Table.Th>
-                <Table.Th className={styles.th} ta="right">Actions</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>{rows}</Table.Tbody>
-          </Table>
+          <>
+            <Table verticalSpacing="sm" horizontalSpacing="md" highlightOnHover>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th className={styles.th} w={68}>—</Table.Th>
+                  <Table.Th className={styles.th}>Title</Table.Th>
+                  <Table.Th className={styles.th}>Category</Table.Th>
+                  <Table.Th className={styles.th}>Status</Table.Th>
+                  <Table.Th className={styles.th}>Uploaded</Table.Th>
+                  <Table.Th className={styles.th} ta="right">Actions</Table.Th>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>{rows}</Table.Tbody>
+            </Table>
+            
+            {totalPages > 1 && (
+              <Group justify="center" py="md" style={{ borderTop: '1px solid #f1f3f5' }}>
+                <Pagination 
+                  total={totalPages} 
+                  value={page} 
+                  onChange={setPage} 
+                  color="blue" 
+                  radius="md" 
+                />
+              </Group>
+            )}
+          </>
         )}
       </Paper>
 

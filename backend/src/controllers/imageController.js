@@ -88,7 +88,11 @@ const uploadImage = async (req, res) => {
  */
 const getImages = async (req, res) => {
   try {
-    const { isFeatured, category, admin, startDate, endDate } = req.query;
+    const { isFeatured, category, admin, startDate, endDate, page = 1, limit = 16 } = req.query;
+
+    const pageNum = parseInt(page, 10) || 1;
+    const limitNum = parseInt(limit, 10) || 16;
+    const skip = (pageNum - 1) * limitNum;
 
     let filter = {};
 
@@ -115,9 +119,16 @@ const getImages = async (req, res) => {
       };
     }
 
-    const images = await Image.find(filter).sort({ createdAt: -1 });
+    const [images, totalItems] = await Promise.all([
+      Image.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limitNum),
+      Image.countDocuments(filter)
+    ]);
+    const totalPages = Math.ceil(totalItems / limitNum);
 
-    return res.status(200).json({ count: images.length, images });
+    return res.status(200).json({ 
+      images, 
+      pagination: { totalPages, currentPage: pageNum, totalItems } 
+    });
   } catch (error) {
     console.error('[getImages]', error);
     return res.status(500).json({ message: 'Server error.', error: error.message });

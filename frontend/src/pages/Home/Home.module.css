@@ -3,6 +3,24 @@
    DESIGN.md — Achromatic Editorial
    ================================================ */
 
+/* ── Page Container ── */
+.page {
+  width: 100%;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 0 80px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .page {
+    padding: 0 140px;
+  }
+}
+
 /* ── Shared wrapper for loading / error / empty states ── */
 .stateWrapper {
   display: flex;
