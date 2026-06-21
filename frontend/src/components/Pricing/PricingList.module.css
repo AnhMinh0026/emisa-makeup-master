@@ -34,18 +34,17 @@
 
 /* ── CTA Button ── */
 .ctaButton {
-  background-color: #c1eec9 !important;
-  color: #000 !important;
-  letter-spacing: 1px;
+  background-color: #000 !important;
+  color: #fff !important;
+  letter-spacing: 0.08em;
   border: 1px solid #000 !important;
-  transition: all 0.3s ease !important;
-  border-radius: 10px;
+  border-radius: 0 !important;
+  transition: background-color 0.2s ease, color 0.2s ease !important;
 }
 
 .ctaButton:hover {
-  background-color: #92e79d !important;
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: #fff !important;
+  color: #000 !important;
 }
 
 /* ── Package list ── */
