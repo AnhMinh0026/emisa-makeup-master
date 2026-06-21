@@ -1,7 +1,7 @@
 import { Container, List, Box } from '@mantine/core';
 import { IconRosetteDiscountCheck } from '@tabler/icons-react';
 import pricingImage from '../../assets/Pricing/EmisaPrice.jpg';
-import CourseGrid from '../../components/Courses/CourseGrid.jsx';
+import { CourseGrid } from '../../features/courses';
 import styles from './CoursePricing.module.css';
 
 /**

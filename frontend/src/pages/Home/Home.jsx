@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Group, Pagination } from '@mantine/core';
-import axios from 'axios';
-import GalleryGrid from '../../components/Gallery/GalleryGrid.jsx';
+import { GalleryGrid, galleryApi } from "../../features/gallery";
 import styles from './Home.module.css';
 
 /**
@@ -19,8 +18,8 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`/api/images?isFeatured=true&page=${page}&limit=16`)
+    galleryApi
+      .getAll({ isFeatured: true, page, limit: 16 })
       .then(({ data }) => {
         setImages(data.images || []);
         setTotalPages(data.pagination?.totalPages || 1);

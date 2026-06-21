@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Box, Text, Loader, Stack, Group, Button } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { IconArrowRight } from '@tabler/icons-react';
-import axios from 'axios';
+import { serviceApi } from '../api/serviceApi.js';
 import styles from './PricingList.module.css';
 
 /**
@@ -19,8 +19,8 @@ export default function PricingList({ category }) {
 
   useEffect(() => {
     if (!category) return;
-    axios
-      .get(`/api/services?category=${category}`)
+    serviceApi
+      .getAll({ category })
       .then(({ data }) => setServices(data.services || []))
       .catch((err) => console.error('Failed to load services:', err))
       .finally(() => setLoading(false));

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Group, Pagination } from '@mantine/core';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import GalleryGrid from '../../components/Gallery/GalleryGrid.jsx';
+import { GalleryGrid, galleryApi } from '../../features/gallery';
 import styles from './StyleGallery.module.css';
 
 /**
@@ -29,7 +29,7 @@ export default function StyleGallery() {
 
     // Execute API requests concurrently to optimize load time.
     Promise.all([
-      axios.get(`/api/images?category=${categorySlug}&page=${page}&limit=16`),
+      galleryApi.getAll({ category: categorySlug, page, limit: 16 }),
       axios.get('/api/categories'),
     ])
       .then(([imagesRes, categoriesRes]) => {

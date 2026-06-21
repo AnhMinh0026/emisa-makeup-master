@@ -10,8 +10,8 @@ import AdminServices from './pages/Admin/AdminServices.jsx';
 import AdminCourses from './pages/Admin/AdminCourses.jsx';
 import MakeupPricing from './pages/Pricing/MakeupPricing.jsx';
 import CoursePricing from './pages/Pricing/CoursePricing.jsx';
-import CourseDetail from './pages/Courses/CourseDetail.jsx';
-import Contact from './pages/Contact/Contact.jsx';
+import { CourseDetail } from './features/courses';
+import { Contact } from './features/contact';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 /**

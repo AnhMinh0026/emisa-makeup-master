@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Box, Text, Button, Stack, Title, Group, Grid } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons-react';
-import axios from 'axios';
+import { courseApi } from '../api/courseApi.js';
 import styles from './CourseDetail.module.css';
 
 /**
@@ -19,8 +19,8 @@ export default function CourseDetail() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`/api/courses/${id}`)
+    courseApi
+      .getById(id)
       .then(({ data }) => setCourse(data.course))
       .catch((err) => setError(err?.response?.data?.message || 'Course not found.'))
       .finally(() => setLoading(false));

@@ -32,6 +32,7 @@ import {
 } from '@tabler/icons-react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { galleryApi } from '../../features/gallery';
 import ImageFormModal from '../../components/Admin/ImageFormModal.jsx';
 import styles from './AdminGallery.module.css';
 
@@ -86,7 +87,7 @@ export default function AdminGallery() {
         params.set('endDate', filterDateRange[1].toISOString());
       }
       
-      const { data } = await axios.get(`${API_BASE}?${params.toString()}`);
+      const { data } = await galleryApi.getAll(params);
       setImages(data.images || []);
       setTotalPages(data.pagination?.totalPages || 1);
     } catch (err) {
@@ -114,7 +115,7 @@ export default function AdminGallery() {
   const handleDelete = async (img) => {
     if (!window.confirm(`Delete "${img.title || 'Untitled'}"? This cannot be undone.`)) return;
     try {
-      await axios.delete(`${API_BASE}/${img._id}`);
+      await galleryApi.delete(img._id);
       notifications.show({
         title: 'Deleted',
         message: `"${img.title || 'Untitled'}" was removed.`,

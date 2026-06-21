@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { SimpleGrid, Box, Text, Image, Button, Stack, Loader } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { courseApi } from '../api/courseApi.js';
 import styles from './CourseGrid.module.css';
 
 /**
@@ -17,8 +17,8 @@ export default function CourseGrid() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get('/api/courses')
+    courseApi
+      .getAll()
       .then(({ data }) => setCourses(data.courses || []))
       .catch((err) => setError(err?.response?.data?.message || 'Failed to load courses.'))
       .finally(() => setLoading(false));

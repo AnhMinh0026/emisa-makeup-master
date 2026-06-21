@@ -18,9 +18,7 @@ import {
   IconX,
   IconAddressBook,
 } from '@tabler/icons-react';
-import axios from 'axios';
-
-const API_URL = '/api/contact';
+import { contactApi } from '../../features/contact';
 
 /**
  * Admin page for managing public contact information.
@@ -44,8 +42,8 @@ export default function AdminContact() {
 
   /* --- Fetch Current Contact Data on Mount --- */
   useEffect(() => {
-    axios
-      .get(API_URL)
+    contactApi
+      .getAll()
       .then(({ data }) => {
         form.setValues({
           phone: data.phone || '',
@@ -71,7 +69,7 @@ export default function AdminContact() {
   const handleSubmit = async (values) => {
     setSaving(true);
     try {
-      await axios.put(API_URL, values);
+      await contactApi.update(values);
       notifications.show({
         title: 'Saved',
         message: 'Contact information updated successfully.',

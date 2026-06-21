@@ -30,9 +30,7 @@ import {
   IconEyeOff,
   IconEye,
 } from '@tabler/icons-react';
-import axios from 'axios';
-
-const API_URL = '/api/services';
+import { serviceApi } from '../../features/services';
 
 /**
  * Admin page for managing pricing packages and services.
@@ -65,7 +63,7 @@ export default function AdminServices() {
   const fetchServices = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`${API_URL}?admin=true`);
+      const { data } = await serviceApi.getAll({ admin: 'true' });
       setServices(data.services || []);
     } catch (err) {
       notifications.show({
@@ -106,7 +104,7 @@ export default function AdminServices() {
     setSaving(true);
     try {
       if (selectedService) {
-        await axios.put(`${API_URL}/${selectedService._id}`, values);
+        await serviceApi.update(selectedService._id, values);
         notifications.show({
           title: 'Đã cập nhật',
           message: `"${values.name}" đã được cập nhật.`,
@@ -114,7 +112,7 @@ export default function AdminServices() {
           icon: <IconCheck size={16} />,
         });
       } else {
-        await axios.post(API_URL, values);
+        await serviceApi.create(values);
         notifications.show({
           title: 'Đã tạo',
           message: `"${values.name}" đã được thêm vào danh sách.`,
@@ -139,7 +137,7 @@ export default function AdminServices() {
   /* --- Toggle Visibility Inline --- */
   const handleToggleHidden = async (svc) => {
     try {
-      await axios.put(`${API_URL}/${svc._id}`, { isHidden: !svc.isHidden });
+      await serviceApi.update(svc._id, { isHidden: !svc.isHidden });
       notifications.show({
         title: svc.isHidden ? 'Đã hiện' : 'Đã ẩn',
         message: `"${svc.name}" ${svc.isHidden ? 'đã được hiện trên trang.' : 'đã bị ẩn khỏi trang.'}`,
@@ -161,7 +159,7 @@ export default function AdminServices() {
   const handleDelete = async (svc) => {
     if (!window.confirm(`Xóa gói "${svc.name}"? Hành động này không thể hoàn tác.`)) return;
     try {
-      await axios.delete(`${API_URL}/${svc._id}`);
+      await serviceApi.delete(svc._id);
       notifications.show({
         title: 'Đã xóa',
         message: `"${svc.name}" đã bị xóa.`,

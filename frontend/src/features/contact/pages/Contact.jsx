@@ -13,10 +13,8 @@ import {
   IconBrandInstagram,
   IconMapPin,
 } from '@tabler/icons-react';
-import axios from 'axios';
+import { contactApi } from '../api/contactApi.js';
 import styles from './Contact.module.css';
-
-const API_URL = '/api/contact';
 
 /**
  * Renders the public contact page containing communication channels and an embedded map.
@@ -29,8 +27,8 @@ export default function Contact() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(API_URL)
+    contactApi
+      .getAll()
       .then(({ data }) => setContactData(data))
       .catch((err) => console.error('Failed to load contact data:', err))
       .finally(() => setLoading(false));

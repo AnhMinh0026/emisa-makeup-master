@@ -1,7 +1,7 @@
 import { Container, Box, Title, Text, Blockquote } from '@mantine/core';
 import { IconQuote } from '@tabler/icons-react';
 import heroImage from '../../assets/Pricing/EmisaPriceMakeup.jpg';
-import PricingList from '../../components/Pricing/PricingList';
+import { PricingList } from '../../features/services';
 import styles from './MakeupPricing.module.css';
 
 /**
