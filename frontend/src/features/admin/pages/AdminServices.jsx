@@ -30,7 +30,7 @@ import {
   IconEyeOff,
   IconEye,
 } from '@tabler/icons-react';
-import { serviceApi } from '../../features/services';
+import { serviceApi } from '../../services';
 
 /**
  * Admin page for managing pricing packages and services.

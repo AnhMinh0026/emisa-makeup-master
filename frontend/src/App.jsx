@@ -3,15 +3,19 @@ import ClientLayout from './layouts/ClientLayout/ClientLayout.jsx';
 import AdminLayout from './layouts/AdminLayout/AdminLayout.jsx';
 import Home from './pages/Home/Home.jsx';
 import StyleGallery from './pages/StyleGallery/StyleGallery.jsx';
-import AdminGallery from './pages/Admin/AdminGallery.jsx';
-import AdminCategories from './pages/Admin/AdminCategories.jsx';
-import AdminContact from './pages/Admin/AdminContact.jsx';
-import AdminServices from './pages/Admin/AdminServices.jsx';
-import AdminCourses from './pages/Admin/AdminCourses.jsx';
+import {
+  AdminGallery,
+  AdminCategories,
+  AdminContact,
+  AdminServices,
+  AdminCourses,
+  ProtectedRoute
+} from './features/admin';
 import MakeupPricing from './pages/Pricing/MakeupPricing.jsx';
 import CoursePricing from './pages/Pricing/CoursePricing.jsx';
 import { CourseDetail } from './features/courses';
 import { Contact } from './features/contact';
+import { Login } from './features/auth';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 /**
@@ -35,14 +39,19 @@ function App() {
           <Route path="/contact" element={<Contact />} />
         </Route>
 
+        {/* --- Auth Routes --- */}
+        <Route path="/login" element={<Login />} />
+
         {/* --- Admin Routes --- */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminGallery />} />
-          <Route path="gallery" element={<AdminGallery />} />
-          <Route path="categories" element={<AdminCategories />} />
-          <Route path="courses" element={<AdminCourses />} />
-          <Route path="services" element={<AdminServices />} />
-          <Route path="contact" element={<AdminContact />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminGallery />} />
+            <Route path="gallery" element={<AdminGallery />} />
+            <Route path="categories" element={<AdminCategories />} />
+            <Route path="courses" element={<AdminCourses />} />
+            <Route path="services" element={<AdminServices />} />
+            <Route path="contact" element={<AdminContact />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

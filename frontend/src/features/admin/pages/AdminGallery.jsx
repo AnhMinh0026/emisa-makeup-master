@@ -32,8 +32,8 @@ import {
 } from '@tabler/icons-react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { galleryApi } from '../../features/gallery';
-import ImageFormModal from '../../components/Admin/ImageFormModal.jsx';
+import { galleryApi } from '../../gallery';
+import ImageFormModal from '../../../components/Admin/ImageFormModal.jsx';
 import styles from './AdminGallery.module.css';
 
 const API_BASE = '/api/images';

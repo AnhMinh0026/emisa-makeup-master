@@ -18,7 +18,7 @@ import {
   IconX,
   IconAddressBook,
 } from '@tabler/icons-react';
-import { contactApi } from '../../features/contact';
+import { contactApi } from '../../contact';
 
 /**
  * Admin page for managing public contact information.

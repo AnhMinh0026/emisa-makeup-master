@@ -10,6 +10,7 @@ import {
   IconAddressBook,
   IconCurrencyDong,
   IconSchool,
+  IconLogout,
 } from '@tabler/icons-react';
 import styles from './AdminLayout.module.css';
 
@@ -30,6 +31,11 @@ const NAV_LINKS = [
  */
 export default function AdminLayout() {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
 
   return (
     <AppShell
@@ -65,7 +71,7 @@ export default function AdminLayout() {
           ))}
         </Stack>
 
-        {/* --- Back to Website --- */}
+        {/* --- Bottom Actions --- */}
         <Box className={styles.backWrapper}>
           <UnstyledButton
             className={styles.backLink}
@@ -74,6 +80,17 @@ export default function AdminLayout() {
             <Group gap={8} wrap="nowrap">
               <IconArrowLeft size={14} stroke={1.8} />
               <Text className={styles.navLinkText}>Back to Website</Text>
+            </Group>
+          </UnstyledButton>
+
+          <UnstyledButton
+            className={styles.backLink}
+            onClick={handleLogout}
+            style={{ marginTop: 5 }}
+          >
+            <Group gap={8} wrap="nowrap">
+              <IconLogout size={14} stroke={1.8} color="#e03131" />
+              <Text className={styles.navLinkText} c="red">Đăng xuất</Text>
             </Group>
           </UnstyledButton>
         </Box>
