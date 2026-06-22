@@ -84,7 +84,7 @@ export default function Contact() {
                 className={styles.listLink}
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                {contactData.facebook}
+                {contactData.facebookName || 'Facebook'}
               </Anchor>
             </List.Item>
           )}
@@ -101,7 +101,7 @@ export default function Contact() {
                 className={styles.listLink}
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                {contactData.instagram}
+                {contactData.instagramName || 'Instagram'}
               </Anchor>
             </List.Item>
           )}

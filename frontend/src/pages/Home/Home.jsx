@@ -61,12 +61,12 @@ export default function Home() {
       <GalleryGrid images={images} />
       {totalPages > 1 && (
         <Group justify="center" mt="xl" pb="xl">
-          <Pagination 
-            total={totalPages} 
-            value={page} 
-            onChange={setPage} 
-            color="dark" 
-            radius="0" 
+          <Pagination
+            total={totalPages}
+            value={page}
+            onChange={setPage}
+            color="dark"
+            radius="0"
           />
         </Group>
       )}

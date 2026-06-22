@@ -16,7 +16,9 @@ const getContact = async (req, res) => {
       return res.status(200).json({
         phone: '',
         facebook: '',
+        facebookName: '',
         instagram: '',
+        instagramName: '',
         address: '',
         mapEmbedCode: '',
       });
@@ -39,12 +41,14 @@ const getContact = async (req, res) => {
  */
 const updateContact = async (req, res) => {
   try {
-    const { phone, facebook, instagram, address, mapEmbedCode } = req.body;
+    const { phone, facebook, facebookName, instagram, instagramName, address, mapEmbedCode } = req.body;
 
     const updates = {};
     if (phone !== undefined)        updates.phone = phone.trim();
     if (facebook !== undefined)     updates.facebook = facebook.trim();
+    if (facebookName !== undefined) updates.facebookName = facebookName.trim();
     if (instagram !== undefined)    updates.instagram = instagram.trim();
+    if (instagramName !== undefined) updates.instagramName = instagramName.trim();
     if (address !== undefined)      updates.address = address.trim();
     if (mapEmbedCode !== undefined) updates.mapEmbedCode = mapEmbedCode;
 

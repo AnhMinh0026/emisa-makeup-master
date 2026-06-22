@@ -14,12 +14,12 @@ import styles from './StyleGallery.module.css';
 export default function StyleGallery() {
   const { categorySlug } = useParams();
 
-  const [images, setImages]         = useState([]);
-  const [page, setPage]             = useState(1);
+  const [images, setImages] = useState([]);
+  const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [categoryName, setCategoryName] = useState('');
-  const [loading, setLoading]       = useState(true);
-  const [error, setError]           = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!categorySlug) return;
@@ -93,12 +93,12 @@ export default function StyleGallery() {
           <GalleryGrid images={images} />
           {totalPages > 1 && (
             <Group justify="center" mt="xl" pb="xl">
-              <Pagination 
-                total={totalPages} 
-                value={page} 
-                onChange={setPage} 
-                color="dark" 
-                radius="0" 
+              <Pagination
+                total={totalPages}
+                value={page}
+                onChange={setPage}
+                color="dark"
+                radius="0"
               />
             </Group>
           )}

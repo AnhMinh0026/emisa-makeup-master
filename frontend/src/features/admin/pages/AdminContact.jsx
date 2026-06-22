@@ -10,6 +10,7 @@ import {
   Textarea,
   Button,
   Loader,
+  SimpleGrid,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -34,7 +35,9 @@ export default function AdminContact() {
     initialValues: {
       phone: '',
       facebook: '',
+      facebookName: '',
       instagram: '',
+      instagramName: '',
       address: '',
       mapEmbedCode: '',
     },
@@ -48,7 +51,9 @@ export default function AdminContact() {
         form.setValues({
           phone: data.phone || '',
           facebook: data.facebook || '',
+          facebookName: data.facebookName || '',
           instagram: data.instagram || '',
+          instagramName: data.instagramName || '',
           address: data.address || '',
           mapEmbedCode: data.mapEmbedCode || '',
         });
@@ -131,22 +136,40 @@ export default function AdminContact() {
               />
 
               {/* --- Facebook --- */}
-              <TextInput
-                id="contact-facebook"
-                label="Facebook Link"
-                placeholder="https://facebook.com/emisa.studio"
-                radius="md"
-                {...form.getInputProps('facebook')}
-              />
+              <SimpleGrid cols={2} spacing="md">
+                <TextInput
+                  id="contact-facebook"
+                  label="Facebook URL"
+                  placeholder="https://facebook.com/emisa.studio"
+                  radius="md"
+                  {...form.getInputProps('facebook')}
+                />
+                <TextInput
+                  id="contact-facebook-name"
+                  label="Facebook Display Name"
+                  placeholder="e.g. Emisa Studio"
+                  radius="md"
+                  {...form.getInputProps('facebookName')}
+                />
+              </SimpleGrid>
 
               {/* --- Instagram --- */}
-              <TextInput
-                id="contact-instagram"
-                label="Instagram Link"
-                placeholder="https://instagram.com/emisa.studio"
-                radius="md"
-                {...form.getInputProps('instagram')}
-              />
+              <SimpleGrid cols={2} spacing="md">
+                <TextInput
+                  id="contact-instagram"
+                  label="Instagram URL"
+                  placeholder="https://instagram.com/emisa.studio"
+                  radius="md"
+                  {...form.getInputProps('instagram')}
+                />
+                <TextInput
+                  id="contact-instagram-name"
+                  label="Instagram Display Name"
+                  placeholder="e.g. @emisa.studio"
+                  radius="md"
+                  {...form.getInputProps('instagramName')}
+                />
+              </SimpleGrid>
 
               {/* --- Address --- */}
               <TextInput

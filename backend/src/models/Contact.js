@@ -18,7 +18,17 @@ const contactSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    facebookName: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     instagram: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    instagramName: {
       type: String,
       trim: true,
       default: '',

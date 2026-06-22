@@ -27,7 +27,7 @@ export default function Header() {
     api
       .get('/categories')
       .then(({ data }) => setCategories(data.categories || []))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   return (
@@ -145,7 +145,7 @@ export default function Header() {
         </nav>
 
         {/* --- Icon Row --- */}
-        <div className={styles.iconRow}>
+        {/* <div className={styles.iconRow}>
           <a
             href="https://instagram.com"
             target="_blank"
@@ -169,7 +169,7 @@ export default function Header() {
           >
             <IconBrandFacebook size={18} stroke={1.5} />
           </a>
-        </div>
+        </div> */}
 
       </div>
     </header>
