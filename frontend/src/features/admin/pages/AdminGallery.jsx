@@ -31,13 +31,12 @@ import {
   IconStar,
 } from '@tabler/icons-react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../lib/axios.js';
 import { galleryApi } from '../../gallery';
 import ImageFormModal from '../../../components/Admin/ImageFormModal.jsx';
 import styles from './AdminGallery.module.css';
 
-const API_BASE = '/api/images';
-const CATEGORIES_API = '/api/categories';
+
 
 /**
  * Admin page for managing the global image gallery.
@@ -63,8 +62,8 @@ export default function AdminGallery() {
 
   // Retrieve categories from the backend to populate the filter dropdown.
   useEffect(() => {
-    axios
-      .get(CATEGORIES_API)
+    api
+      .get('/categories')
       .then(({ data }) => {
         setCategoryOptions(
           (data.categories || []).map((cat) => ({ value: cat.slug, label: cat.name }))

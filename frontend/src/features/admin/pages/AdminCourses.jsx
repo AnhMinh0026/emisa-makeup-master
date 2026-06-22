@@ -22,7 +22,7 @@ import {
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { IconPlus, IconPencil, IconTrash, IconCheck, IconX, IconSchool, IconPhoto } from '@tabler/icons-react';
-import axios from 'axios';
+import api from '../../../lib/axios.js';
 import styles from './AdminGallery.module.css'; // Reusing standard SaaS table styles
 
 /**
@@ -59,7 +59,7 @@ export default function AdminCourses() {
   const fetchCourses = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get('/api/courses?admin=true');
+      const { data } = await api.get('/courses?admin=true');
       setCourses(data.courses || []);
     } catch (err) {
       notifications.show({
@@ -100,7 +100,7 @@ export default function AdminCourses() {
   const handleDelete = async (id, title) => {
     if (!window.confirm(`Delete "${title}"? This cannot be undone.`)) return;
     try {
-      await axios.delete(`/api/courses/${id}`);
+      await api.delete(`/courses/${id}`);
       notifications.show({
         title: 'Deleted',
         message: 'Course removed successfully.',
@@ -134,7 +134,7 @@ export default function AdminCourses() {
       const config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
       if (editingId) {
-        await axios.put(`/api/courses/${editingId}`, formData, config);
+        await api.put(`/courses/${editingId}`, formData, config);
         notifications.show({
           title: 'Updated',
           message: 'Course updated successfully.',
@@ -142,7 +142,7 @@ export default function AdminCourses() {
           icon: <IconCheck size={16} />,
         });
       } else {
-        await axios.post('/api/courses', formData, config);
+        await api.post('/courses', formData, config);
         notifications.show({
           title: 'Created',
           message: 'Course created successfully.',

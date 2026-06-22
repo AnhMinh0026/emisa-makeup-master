@@ -16,10 +16,7 @@ import {
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { IconUpload, IconCheck, IconX, IconAlertCircle } from '@tabler/icons-react';
-import axios from 'axios';
-
-const API_BASE = '/api/images';
-const CATEGORIES_API = '/api/categories';
+import api from '../../lib/axios.js';
 
 /**
  * Modal component for creating or editing an image entry in the admin gallery.
@@ -42,8 +39,8 @@ export default function ImageFormModal({ opened, onClose, image, onSuccess }) {
   useEffect(() => {
     if (!opened) return;
     setLoadingCats(true);
-    axios
-      .get(CATEGORIES_API)
+    api
+      .get('/categories')
       .then(({ data }) => {
         setCategoryOptions(
           (data.categories || []).map((cat) => ({ value: cat.slug, label: cat.name }))
@@ -98,12 +95,12 @@ export default function ImageFormModal({ opened, onClose, image, onSuccess }) {
 
     try {
       if (isEditing) {
-        await axios.put(`${API_BASE}/${image._id}`, formData, {
+        await api.put(`/images/${image._id}`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         notifications.show({ title: 'Updated', message: 'Image updated.', color: 'green', icon: <IconCheck size={16} /> });
       } else {
-        await axios.post(API_BASE, formData, {
+        await api.post('/images', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         notifications.show({ title: 'Uploaded', message: 'Image added to gallery.', color: 'green', icon: <IconCheck size={16} /> });

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Group, Pagination } from '@mantine/core';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../lib/axios.js';
 import { GalleryGrid, galleryApi } from '../../features/gallery';
 import styles from './StyleGallery.module.css';
 
@@ -30,7 +30,7 @@ export default function StyleGallery() {
     // Execute API requests concurrently to optimize load time.
     Promise.all([
       galleryApi.getAll({ category: categorySlug, page, limit: 16 }),
-      axios.get('/api/categories'),
+      api.get('/categories'),
     ])
       .then(([imagesRes, categoriesRes]) => {
         setImages(imagesRes.data.images || []);

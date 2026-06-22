@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { IconBrandInstagram, IconBrandFacebook, IconPhone } from '@tabler/icons-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu } from '@mantine/core';
-import axios from 'axios';
+import api from '../../lib/axios.js';
 import styles from './Header.module.css';
 
 const NAV_LINKS = [
@@ -24,8 +24,8 @@ export default function Header() {
 
   // Retrieve dynamic categories for the dropdown menu; fail silently to preserve UI integrity.
   useEffect(() => {
-    axios
-      .get('/api/categories')
+    api
+      .get('/categories')
       .then(({ data }) => setCategories(data.categories || []))
       .catch(() => {});
   }, []);

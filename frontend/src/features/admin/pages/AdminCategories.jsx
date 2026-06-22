@@ -29,10 +29,10 @@ import {
   IconPhoto,
 } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../../lib/axios.js';
 import styles from './AdminCategories.module.css';
 
-const API_BASE = '/api/categories';
+
 
 /* --- Category Form Modal --- */
 /**
@@ -78,13 +78,13 @@ function CategoryFormModal({ opened, onClose, category, onSuccess }) {
   const handleSubmit = async (values) => {
     try {
       if (isEditing) {
-        await axios.put(`${API_BASE}/${category._id}`, {
+        await api.put(`/categories/${category._id}`, {
           name: values.name.trim(),
           slug: values.slug.trim() || undefined,
         });
         notifications.show({ title: 'Updated', message: 'Category updated.', color: 'green', icon: <IconCheck size={16} /> });
       } else {
-        await axios.post(API_BASE, {
+        await api.post('/categories', {
           name: values.name.trim(),
           slug: values.slug.trim() || undefined,
         });
@@ -159,7 +159,7 @@ export default function AdminCategories() {
   const fetchCategories = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(API_BASE);
+      const { data } = await api.get('/categories');
       setCategories(data.categories || []);
     } catch (err) {
       notifications.show({
@@ -181,7 +181,7 @@ export default function AdminCategories() {
   const handleDelete = async (cat) => {
     if (!window.confirm(`Delete category "${cat.name}"? This cannot be undone.`)) return;
     try {
-      await axios.delete(`${API_BASE}/${cat._id}`);
+      await api.delete(`/categories/${cat._id}`);
       notifications.show({
         title: 'Deleted',
         message: `"${cat.name}" removed.`,
